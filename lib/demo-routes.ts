@@ -12,7 +12,7 @@ export function getDemoByKey(key: CategoryKey): DemoBusiness {
 }
 
 export function getDemoCategorySlug(key: CategoryKey): string {
-  return CATEGORY_CONFIG[key].slug;
+  return CATEGORY_CONFIG[key].publicSlug;
 }
 
 export function getDemoPath(key: CategoryKey): string {
