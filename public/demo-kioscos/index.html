@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartBarrio · Demo Kioscos</title>
+  <meta name="description" content="Demo comercial SmartBarrio para kioscos y comercios de barrio." />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #172019;
+      --muted: #69746c;
+      --line: #e6ebe6;
+      --paper: #f7f8f5;
+      --card: #fff;
+      --brand: #164a36;
+      --accent: #d7ef47;
+      --soft: #edf4e8;
+      --orange: #ef9b45;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: "DM Sans", sans-serif; }
+    a, button { cursor: pointer; font: inherit; }
+    a { text-decoration: none; color: inherit; }
+    .topbar { background: #172019; color: #fff; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 11px 28px; font-size: 12px; }
+    .topbar strong { font-family: Manrope, sans-serif; font-size: 13px; margin-right: 10px; }
+    .topbar span { color: #aeb8b0; }
+    .topbar a { background: #fff; color: #172019; font-weight: 700; border-radius: 8px; padding: 6px 12px; font-size: 12px; }
+    .nav { height: 72px; background: #fff; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; padding: 0 max(24px, calc((100vw - 1180px) / 2)); }
+    .brand { display: flex; align-items: center; gap: 9px; font-family: Manrope, sans-serif; font-weight: 800; letter-spacing: -.03em; }
+    .brand-mark { width: 31px; height: 31px; border-radius: 9px; background: var(--brand); color: var(--accent); display: grid; place-items: center; font-size: 11px; font-weight: 800; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .pill { font-size: 11px; background: #f0f3ee; color: #526057; padding: 6px 10px; border-radius: 99px; }
+    .btn { border-radius: 10px; padding: 11px 15px; border: 1px solid var(--line); font-weight: 750; font-size: 13px; display: inline-flex; align-items: center; gap: 7px; }
+    .btn.primary { background: var(--brand); color: #fff; border-color: var(--brand); }
+    .btn.secondary { background: #fff; color: var(--ink); }
+    .wrap { max-width: 1180px; margin: auto; padding: 34px 24px 70px; }
+    .hero { display: grid; grid-template-columns: 1.08fr .92fr; background: #fff; border: 1px solid var(--line); border-radius: 24px; overflow: hidden; min-height: 380px; }
+    .hero-copy { padding: 50px 50px 44px; }
+    .eyebrow { font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: 800; color: #728077; display: flex; align-items: center; gap: 8px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
+    .hero h1 { font-family: Manrope, sans-serif; font-size: 42px; line-height: 1.05; letter-spacing: -.05em; margin: 16px 0 14px; }
+    .hero p { font-size: 17px; line-height: 1.55; color: var(--muted); max-width: 480px; margin: 0; }
+    .hero-actions { display: flex; gap: 9px; margin: 26px 0 16px; flex-wrap: wrap; }
+    .trust { font-size: 12px; color: #6d786f; }
+    .hero-visual { margin: 15px; border-radius: 17px; min-height: 300px; background: linear-gradient(145deg, #ef9b45, #b86e28); color: #fff; display: grid; place-items: center; position: relative; }
+    .hero-visual .badge { position: absolute; top: 17px; left: 17px; background: #fffffff0; color: #27332c; border-radius: 8px; padding: 7px 9px; font-size: 10px; font-weight: 800; }
+    .hero-visual .letters { font-size: 88px; font-weight: 900; letter-spacing: -.1em; font-family: Manrope, sans-serif; }
+    .hero-visual .addr { position: absolute; left: 17px; right: 17px; bottom: 17px; background: #17201999; padding: 10px; border-radius: 9px; font-size: 11px; }
+    .kicker { font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: 800; color: #728077; }
+    .section-head { margin: 48px 0 18px; }
+    .section-head h2 { font-family: Manrope, sans-serif; letter-spacing: -.04em; margin: 6px 0 0; font-size: 28px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: 15px; padding: 18px; }
+    .card h3 { font-family: Manrope, sans-serif; font-size: 16px; margin: 10px 0 6px; }
+    .card p { font-size: 13px; color: var(--muted); line-height: 1.5; margin: 0; }
+    .icon-box { width: 40px; height: 40px; border-radius: 10px; background: var(--soft); display: grid; place-items: center; font-size: 18px; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 12px; }
+    .step { background: #fff; border: 1px solid var(--line); border-radius: 15px; padding: 20px; text-align: center; }
+    .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--brand); color: #fff; display: grid; place-items: center; margin: 0 auto 12px; font-weight: 800; font-size: 14px; }
+    .step h3 { font-family: Manrope, sans-serif; font-size: 15px; margin: 0 0 6px; }
+    .step p { font-size: 13px; color: var(--muted); margin: 0; }
+    .cta-box { margin-top: 48px; background: #172019; color: #fff; border-radius: 19px; padding: 36px 40px; }
+    .cta-box .kicker { color: #9dac9f; }
+    .cta-box h2 { font-family: Manrope, sans-serif; font-size: 26px; letter-spacing: -.04em; margin: 6px 0 8px; max-width: 520px; }
+    .cta-box p { font-size: 14px; color: #b8c2ba; margin: 0 0 16px; max-width: 480px; }
+    .cta-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .cta-box .btn.primary { background: var(--accent); color: #172019; border-color: var(--accent); }
+    .cta-box .btn.secondary { background: transparent; color: #fff; border-color: #425047; }
+    .hint { font-size: 12px; color: #8a958c; margin-top: 12px; }
+    .hint code { color: var(--accent); font-family: ui-monospace, monospace; }
+    .footer { margin-top: 48px; border-top: 1px solid var(--line); padding-top: 18px; display: flex; justify-content: space-between; font-size: 11px; color: #7b857e; }
+    @media (max-width: 850px) { .hero { grid-template-columns: 1fr; } .hero-copy { padding: 32px 26px; } .hero h1 { font-size: 32px; } .grid-3, .steps { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div><strong>SmartBarrio</strong><span>Demo comercial · Kioscos</span></div>
+    <a href="nuovo-market/index.html">Probar demo →</a>
+  </div>
+  <header class="nav">
+    <div class="brand"><span class="brand-mark">SB</span>SmartBarrio</div>
+    <div class="nav-right">
+      <span class="pill">Demo QA</span>
+      <a class="btn secondary" href="nuovo-market/admin.html">Administrar</a>
+      <a class="btn primary" href="nuovo-market/index.html">Ver kiosco</a>
+    </div>
+  </header>
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="dot"></span>Infraestructura digital · Kioscos</div>
+        <h1>Tu kiosco online en menos de 24 horas</h1>
+        <p>Catálogo, pedidos por WhatsApp y panel simple. Pensado para el ritmo de un comercio de barrio, sin complicaciones técnicas.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="nuovo-market/index.html">Ver demo Nuovo Market</a>
+          <a class="btn secondary" href="#beneficios">Por qué SmartBarrio</a>
+        </div>
+        <div class="trust">✓ Listo para presentar · ✓ Admin funcional · ✓ Pedidos por WhatsApp</div>
+      </div>
+      <div class="hero-visual">
+        <span class="badge">Kiosco</span>
+        <span class="letters">NM</span>
+        <span class="addr">⌖ Demo · Nuovo Market</span>
+      </div>
+    </section>
+    <div class="section-head" id="beneficios">
+      <span class="kicker">Beneficios reales</span>
+      <h2>Lo que un kiosco gana con SmartBarrio</h2>
+    </div>
+    <div class="grid-3">
+      <article class="card"><div class="icon-box">📱</div><h3>Presencia profesional</h3><p>Tu kiosco se ve serio y moderno en el celular del cliente. Genera confianza y más consultas.</p></article>
+      <article class="card"><div class="icon-box">🛒</div><h3>Catálogo actualizado</h3><p>Agregá productos, cambiá precios y promociones desde el panel. Sin depender de nadie.</p></article>
+      <article class="card"><div class="icon-box">💬</div><h3>Pedidos por WhatsApp</h3><p>El cliente elige, completa datos y te llega el pedido listo. Cero fricción.</p></article>
+      <article class="card"><div class="icon-box">⚙️</div><h3>Panel simple</h3><p>Marca, productos y pedidos en un solo lugar. Pensado para dueños, no para programadores.</p></article>
+      <article class="card"><div class="icon-box">⚡</div><h3>Rápido</h3><p>En menos de un día tenés el sitio listo. Hosting y mantenimiento incluidos.</p></article>
+      <article class="card"><div class="icon-box">📈</div><h3>Evoluciona</h3><p>Empezás con catálogo + WhatsApp. Después sumás módulos según tu crecimiento.</p></article>
+    </div>
+    <div class="section-head"><span class="kicker">Proceso</span><h2>De la idea al kiosco online</h2></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><h3>Contanos de tu kiosco</h3><p>Nombre, productos, WhatsApp y estilo. En 15 minutos armamos el brief.</p></div>
+      <div class="step"><div class="step-num">2</div><h3>Configuramos y publicamos</h3><p>Catálogo, colores y panel. En menos de 24 hs está online.</p></div>
+      <div class="step"><div class="step-num">3</div><h3>Empezás a recibir pedidos</h3><p>Compartís el link. Los pedidos llegan por WhatsApp listos para preparar.</p></div>
+    </div>
+    <section class="cta-box">
+      <div>
+        <span class="kicker">Demo interactiva</span>
+        <h2>Probalo con Kiosco Nuovo Market</h2>
+        <p>Entrá a la vista del cliente, simulá un pedido y abrí el panel para cambiar productos y marca en tiempo real.</p>
+        <div class="cta-actions">
+          <a class="btn primary" href="nuovo-market/index.html">Ver sitio del kiosco</a>
+          <a class="btn secondary" href="nuovo-market/admin.html">Abrir panel admin</a>
+        </div>
+        <p class="hint">Contraseña admin: <code>admin123</code></p>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="brand"><span class="brand-mark">SB</span>SmartBarrio</div>
+      <span>© 2026 · Demo QA · Infraestructura digital para negocios de barrio</span>
+    </footer>
+  </main>
+</body>
+</html>
