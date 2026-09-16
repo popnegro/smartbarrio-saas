@@ -41,13 +41,20 @@
     .form input, .form textarea { margin-top: 5px; }
     .save-row { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #587560; }
     .btn.small { width: auto; padding: 9px 14px; margin: 0; }
+    .products-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .product-card { display: grid; grid-template-columns: 68px 1fr auto; gap: 12px; align-items: center; padding: 10px; border: 1px solid #edf0ed; border-radius: 12px; background: #fff; }
+    .product-thumb { width: 68px; height: 68px; border-radius: 10px; object-fit: cover; display: block; background: #eef3ee; border: 1px solid #e4e9e4; }
+    .product-info { min-width: 0; }
+    .product-info b { display: block; font-family: Manrope, sans-serif; font-size: 13px; line-height: 1.25; }
+    .product-info .meta { margin-top: 4px; }
+    .product-info .desc { color: #7b857e; font-size: 11px; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid #edf0ed; font-size: 13px; }
     .row:first-child { border-top: 0; }
-    .row .meta { color: var(--muted); font-size: 12px; }
-    .del { border: 0; background: transparent; color: #b44; font-size: 12px; font-weight: 700; }
+    .row .meta, .meta { color: var(--muted); font-size: 12px; }
+    .del { border: 0; background: transparent; color: #b44; font-size: 12px; font-weight: 700; white-space: nowrap; }
     .msg { color: var(--brand); font-size: 12px; font-weight: 700; display: none; }
     .msg.show { display: block; }
-    @media (max-width: 800px) { .dash.show { grid-template-columns: 1fr; } .side { display: none; } .form { grid-template-columns: 1fr; } }
+    @media (max-width: 800px) { .dash.show { grid-template-columns: 1fr; } .side { display: none; } .form { grid-template-columns: 1fr; } .products-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -91,7 +98,7 @@
         </div>
       </section>
       <section class="panel tab" id="tab-products" style="display:none">
-        <h2>Agregar producto</h2>
+        <h2>Productos del catálogo</h2>
         <div class="form" style="margin-bottom:12px">
           <input id="prod-name" placeholder="Nombre" />
           <input id="prod-category" placeholder="Categoría" />
@@ -99,7 +106,7 @@
           <input id="prod-desc" placeholder="Descripción corta" />
         </div>
         <button class="btn primary small" id="add-prod">Agregar</button>
-        <div id="products-list" style="margin-top:18px"></div>
+        <div id="products-list" class="products-grid" style="margin-top:18px"></div>
       </section>
       <section class="panel tab" id="tab-orders" style="display:none">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
@@ -113,8 +120,18 @@
   <script>
   (function(){
     const STORAGE_KEY='nuovo_market_data_v1', PASS='admin123', SESSION='nuovo_market_admin_session';
-    const DEFAULT={brand:{name:'Nuovo Market',whatsapp:'5492615551040',heroTitle:'Todo lo que necesitás, cerca y rápido',heroDesc:'Bebidas, snacks, cigarrillos, golosinas y más. Pedí por WhatsApp y retirás o coordinamos entrega en el barrio.'},products:[{id:'p1',name:'Coca-Cola 2.25L',category:'Bebidas',price:2800,description:'Gaseosa clásica familiar'},{id:'p2',name:'Agua Villavicencio 2L',category:'Bebidas',price:1500,description:'Agua mineral sin gas'},{id:'p3',name:'Cerveza Quilmes 1L',category:'Bebidas',price:2200,description:'Cerveza rubia'},{id:'p4',name:'Papas Lays Clásicas',category:'Snacks',price:1800,description:'Bolsa mediana'},{id:'p5',name:'Alfajor Havanna',category:'Golosinas',price:1200,description:'Doble dulce de leche'},{id:'p6',name:'Cigarrillos Marlboro',category:'Cigarrillos',price:3500,description:'Box 20 unidades'},{id:'p7',name:'Yogur La Serenísima',category:'Lácteos',price:1100,description:'Natural o frutado'},{id:'p8',name:'Galletitas Oreo',category:'Golosinas',price:1600,description:'Paquete clásico'},{id:'p9',name:'Energizante Red Bull',category:'Bebidas',price:2500,description:'Lata 250ml'}],orders:[]};
-    function load(){try{const r=localStorage.getItem(STORAGE_KEY);if(!r){const d=structuredClone(DEFAULT);localStorage.setItem(STORAGE_KEY,JSON.stringify(d));return d}return JSON.parse(r)}catch{return structuredClone(DEFAULT)}}
+    const DEFAULT={brand:{name:'Nuovo Market',whatsapp:'5492615551040',heroTitle:'Todo lo que necesitás, cerca y rápido',heroDesc:'Bebidas, snacks, cigarrillos, golosinas y más. Pedí por WhatsApp y retirás o coordinamos entrega en el barrio.'},products:[
+      {id:'p1',name:'Coca-Cola 2.25L',category:'Bebidas',price:2800,description:'Gaseosa clásica familiar',image:'https://placehold.co/160x160/f0f3ee/164a36?text=Coca-Cola'},
+      {id:'p2',name:'Agua Villavicencio 2L',category:'Bebidas',price:1500,description:'Agua mineral sin gas',image:'https://placehold.co/160x160/eaf0e9/164a36?text=Agua'},
+      {id:'p3',name:'Cerveza Quilmes 1L',category:'Bebidas',price:2200,description:'Cerveza rubia',image:'https://placehold.co/160x160/f4f0df/164a36?text=Quilmes'},
+      {id:'p4',name:'Papas Lays Clásicas',category:'Snacks',price:1800,description:'Bolsa mediana',image:'https://placehold.co/160x160/f6eee6/164a36?text=Lays'},
+      {id:'p5',name:'Alfajor Havanna',category:'Golosinas',price:1200,description:'Doble dulce de leche',image:'https://placehold.co/160x160/f1e9e2/164a36?text=Alfajor'},
+      {id:'p6',name:'Cigarrillos Marlboro',category:'Cigarrillos',price:3500,description:'Box 20 unidades',image:'https://placehold.co/160x160/eeeeea/164a36?text=Marlboro'},
+      {id:'p7',name:'Yogur La Serenísima',category:'Lácteos',price:1100,description:'Natural o frutado',image:'https://placehold.co/160x160/e8f0ef/164a36?text=Yogur'},
+      {id:'p8',name:'Galletitas Oreo',category:'Golosinas',price:1600,description:'Paquete clásico',image:'https://placehold.co/160x160/e9edf0/164a36?text=Oreo'},
+      {id:'p9',name:'Energizante Red Bull',category:'Bebidas',price:2500,description:'Lata 250ml',image:'https://placehold.co/160x160/e9eef1/164a36?text=Red+Bull'}
+    ],orders:[]};
+    function load(){try{const r=localStorage.getItem(STORAGE_KEY);if(!r){const d=structuredClone(DEFAULT);localStorage.setItem(STORAGE_KEY,JSON.stringify(d));return d}const d=JSON.parse(r);d.products=(d.products||[]).map(p=>({...p,image:p.image||`https://placehold.co/160x160/eaf0e9/164a36?text=${encodeURIComponent(p.name||'Producto')}`}));return d}catch{return structuredClone(DEFAULT)}}
     function save(d){localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}
     let data=load();
     function money(n){return new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0}).format(n)}
@@ -126,8 +143,8 @@
     document.querySelectorAll('.side nav button').forEach(btn=>{btn.onclick=()=>{document.querySelectorAll('.side nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.tab').forEach(t=>t.style.display='none');document.getElementById('tab-'+btn.dataset.tab).style.display='block';document.getElementById('section-title').textContent=btn.dataset.tab==='brand'?'Mi negocio':btn.dataset.tab==='products'?'Productos':'Pedidos'}});
     function loadBrand(){const b=data.brand;document.getElementById('brand-name').value=b.name||'';document.getElementById('brand-wa').value=b.whatsapp||'';document.getElementById('brand-hero-title').value=b.heroTitle||'';document.getElementById('brand-hero-desc').value=b.heroDesc||'';document.getElementById('side-name').textContent=b.name||'Nuovo Market'}
     document.getElementById('save-brand').onclick=()=>{data.brand.name=document.getElementById('brand-name').value.trim()||'Nuovo Market';data.brand.whatsapp=document.getElementById('brand-wa').value.replace(/\D/g,'')||'5492615551040';data.brand.heroTitle=document.getElementById('brand-hero-title').value.trim();data.brand.heroDesc=document.getElementById('brand-hero-desc').value.trim();save(data);document.getElementById('side-name').textContent=data.brand.name;const m=document.getElementById('brand-msg');m.classList.add('show');setTimeout(()=>m.classList.remove('show'),3000)};
-    function renderProducts(){const list=document.getElementById('products-list');if(!data.products.length){list.innerHTML='<p style="font-size:13px;color:#7b857e">No hay productos.</p>';return}list.innerHTML=data.products.map(p=>'<div class="row"><div><b>'+p.name+'</b><div class="meta">'+(p.category||'—')+' · '+money(p.price)+'</div></div><button class="del" data-id="'+p.id+'">Eliminar</button></div>').join('');list.querySelectorAll('.del').forEach(btn=>{btn.onclick=()=>{if(!confirm('¿Eliminar?'))return;data.products=data.products.filter(p=>p.id!==btn.dataset.id);save(data);renderProducts()}})}
-    document.getElementById('add-prod').onclick=()=>{const name=document.getElementById('prod-name').value.trim();if(!name)return alert('Nombre obligatorio');data.products.push({id:'p'+Date.now(),name,category:document.getElementById('prod-category').value.trim()||'General',price:parseInt(document.getElementById('prod-price').value,10)||0,description:document.getElementById('prod-desc').value.trim()});save(data);renderProducts();['prod-name','prod-category','prod-price','prod-desc'].forEach(id=>document.getElementById(id).value='')};
+    function renderProducts(){const list=document.getElementById('products-list');if(!data.products.length){list.innerHTML='<p style="font-size:13px;color:#7b857e">No hay productos.</p>';return}list.innerHTML=data.products.map(p=>'<article class="product-card"><img class="product-thumb" src="'+(p.image||'')+'" alt="'+p.name+'" loading="lazy"><div class="product-info"><b>'+p.name+'</b><div class="meta">'+(p.category||'—')+' · '+money(p.price)+'</div><div class="desc">'+(p.description||'Sin descripción')+'</div></div><button class="del" data-id="'+p.id+'">Eliminar</button></article>').join('');list.querySelectorAll('.del').forEach(btn=>{btn.onclick=()=>{if(!confirm('¿Eliminar?'))return;data.products=data.products.filter(p=>p.id!==btn.dataset.id);save(data);renderProducts()}})}
+    document.getElementById('add-prod').onclick=()=>{const name=document.getElementById('prod-name').value.trim();if(!name)return alert('Nombre obligatorio');data.products.push({id:'p'+Date.now(),name,category:document.getElementById('prod-category').value.trim()||'General',price:parseInt(document.getElementById('prod-price').value,10)||0,description:document.getElementById('prod-desc').value.trim(),image:'https://placehold.co/160x160/eaf0e9/164a36?text='+encodeURIComponent(name)});save(data);renderProducts();['prod-name','prod-category','prod-price','prod-desc'].forEach(id=>document.getElementById(id).value='')};
     function renderOrders(){const list=document.getElementById('orders-list');if(!data.orders.length){list.innerHTML='<p style="font-size:13px;color:#7b857e">Todavía no hay pedidos. Probá desde el sitio público.</p>';return}list.innerHTML=data.orders.map(o=>'<div class="row"><div><b>'+o.productName+' × '+o.quantity+'</b><div class="meta">'+o.customerName+' · '+o.customerPhone+(o.note?' · '+o.note:'')+'</div></div><div style="text-align:right"><b>'+money(o.total)+'</b><div class="meta">'+date(o.createdAt)+'</div></div></div>').join('')}
     document.getElementById('clear-orders').onclick=()=>{if(!confirm('¿Borrar todos los pedidos?'))return;data.orders=[];save(data);renderOrders()};
     window.addEventListener('storage',e=>{if(e.key===STORAGE_KEY){data=load();loadBrand();renderProducts();renderOrders()}});
