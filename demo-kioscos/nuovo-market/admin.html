@@ -4,123 +4,180 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin · Nuovo Market</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Inter', system-ui, sans-serif; }
-    .tab-active { border-bottom: 2px solid #164a36; color: #164a36; }
+    :root {
+      --ink: #172019;
+      --muted: #69746c;
+      --line: #e6ebe6;
+      --paper: #f7f8f5;
+      --card: #fff;
+      --brand: #164a36;
+      --accent: #d7ef47;
+      --soft: #edf4e8;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: "DM Sans", sans-serif; min-height: 100vh; }
+    a, button { cursor: pointer; font: inherit; }
+    a { text-decoration: none; color: inherit; }
+
+    .login-wrap { min-height: 100vh; display: grid; place-items: center; padding: 20px; }
+    .login-box {
+      width: min(380px, 100%); background: #fff; border: 1px solid var(--line); border-radius: 17px; padding: 28px;
+    }
+    .login-box h1 { font-family: Manrope, sans-serif; font-size: 22px; margin: 12px 0 4px; letter-spacing: -.03em; }
+    .login-box p { font-size: 13px; color: var(--muted); margin: 0 0 18px; }
+    .brand-mark {
+      width: 36px; height: 36px; border-radius: 9px; background: var(--brand); color: var(--accent);
+      display: grid; place-items: center; font-size: 12px; font-weight: 800;
+    }
+    label { display: block; font-size: 11px; font-weight: 800; margin-bottom: 5px; }
+    input, textarea, select {
+      width: 100%; padding: 10px 12px; border: 1px solid #dde4dd; border-radius: 8px; background: #fff;
+    }
+    .btn {
+      border-radius: 10px; padding: 11px 15px; border: 1px solid var(--line);
+      font-weight: 750; font-size: 13px;
+    }
+    .btn.primary { background: var(--brand); color: #fff; border-color: var(--brand); width: 100%; margin-top: 14px; }
+    .hint { font-size: 11px; color: #7b857e; text-align: center; margin-top: 14px; }
+
+    .dash { display: none; min-height: 100vh; grid-template-columns: 230px 1fr; }
+    .dash.show { display: grid; }
+    .side {
+      background: #172019; color: #fff; padding: 20px 14px;
+    }
+    .side .brand { display: flex; align-items: center; gap: 9px; font-family: Manrope, sans-serif; font-weight: 800; margin-bottom: 22px; }
+    .side-biz {
+      border: 1px solid #344239; background: #202c24; border-radius: 10px; padding: 11px; margin-bottom: 16px; font-size: 12px;
+    }
+    .side-biz small { display: block; color: #96a39a; margin-top: 3px; }
+    .side nav button {
+      width: 100%; background: transparent; color: #9ca89f; border: 0; text-align: left;
+      padding: 10px; border-radius: 8px; font-size: 12px; margin-bottom: 2px;
+    }
+    .side nav button.active { background: #2b3a31; color: #fff; }
+    .view-public {
+      margin-top: 20px; width: 100%; border: 1px solid #344239; background: transparent; color: #c9d0ca;
+      border-radius: 8px; padding: 10px; font-size: 12px; font-weight: 700;
+    }
+
+    .dmain { padding: 28px; max-width: 980px; }
+    .kicker { font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: 800; color: #728077; }
+    .dmain h1 { font-family: Manrope, sans-serif; font-size: 28px; letter-spacing: -.04em; margin: 4px 0 20px; }
+
+    .panel {
+      background: #fff; border: 1px solid var(--line); border-radius: 13px; padding: 18px; margin-bottom: 14px;
+    }
+    .panel h2 { font-family: Manrope, sans-serif; font-size: 16px; margin: 0 0 14px; }
+    .form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form .wide { grid-column: 1 / -1; }
+    .form label { margin-bottom: 0; }
+    .form input, .form textarea { margin-top: 5px; }
+    .save-row {
+      margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #587560;
+    }
+    .btn.small { width: auto; padding: 9px 14px; margin: 0; }
+
+    .row {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      padding: 12px 0; border-top: 1px solid #edf0ed; font-size: 13px;
+    }
+    .row:first-child { border-top: 0; }
+    .row .meta { color: var(--muted); font-size: 12px; }
+    .del { border: 0; background: transparent; color: #b44; font-size: 12px; font-weight: 700; }
+
+    .msg { color: var(--brand); font-size: 12px; font-weight: 700; display: none; }
+    .msg.show { display: block; }
+
+    @media (max-width: 800px) {
+      .dash.show { grid-template-columns: 1fr; }
+      .side { display: none; }
+      .form { grid-template-columns: 1fr; }
+      .form .wide { grid-column: auto; }
+    }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-900 antialiased min-h-screen">
+<body>
 
-  <div id="login-screen" class="min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-sm rounded-2xl bg-white p-8 shadow-xl">
-      <div class="text-center mb-6">
-        <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 text-sm font-black text-white">NM</div>
-        <h1 class="text-xl font-black">Panel Admin</h1>
-        <p class="text-sm text-slate-500 mt-1">Nuovo Market · Demo</p>
-      </div>
-      <label class="block text-sm font-semibold text-slate-700 mb-1.5">Contraseña</label>
-      <input id="login-pass" type="password" value="admin123" class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#164a36]" placeholder="admin123">
-      <button id="login-btn" class="mt-4 w-full rounded-xl bg-[#164a36] py-3 font-bold text-white hover:bg-[#1a5c44] transition">Ingresar</button>
-      <p class="mt-4 text-center text-xs text-slate-400">Demo: usá <strong>admin123</strong></p>
+  <div class="login-wrap" id="login-screen">
+    <div class="login-box">
+      <div class="brand-mark">NM</div>
+      <h1>Panel Admin</h1>
+      <p>Nuovo Market · Demo SmartBarrio</p>
+      <label>Contraseña</label>
+      <input id="login-pass" type="password" value="admin123" />
+      <button class="btn primary" id="login-btn">Ingresar</button>
+      <p class="hint">Demo: usá <strong>admin123</strong></p>
     </div>
   </div>
 
-  <div id="admin-app" class="hidden">
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
-      <div class="mx-auto max-w-5xl px-4 sm:px-6">
-        <div class="flex h-14 items-center justify-between">
-          <div class="flex items-center gap-3">
-            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-xs font-black text-white">NM</span>
-            <span class="font-bold">Admin · Nuovo Market</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <a href="index.html" target="_blank" class="text-sm font-semibold text-[#164a36] hover:underline">Ver sitio →</a>
-            <button id="logout-btn" class="text-sm text-slate-500 hover:text-slate-800">Salir</button>
-          </div>
-        </div>
+  <div class="dash" id="admin-app">
+    <aside class="side">
+      <div class="brand"><span class="brand-mark">SB</span>SmartBarrio</div>
+      <div class="side-biz">
+        <b id="side-name">Nuovo Market</b>
+        <small>Kiosco</small>
       </div>
-    </header>
+      <nav>
+        <button class="active" data-tab="brand">▣ Mi negocio</button>
+        <button data-tab="products">□ Productos</button>
+        <button data-tab="orders">✉ Pedidos</button>
+      </nav>
+      <button class="view-public" onclick="window.open('index.html','_blank')">↗ Ver sitio público</button>
+      <button class="view-public" id="logout-btn" style="margin-top:8px">Salir</button>
+    </aside>
 
-    <div class="mx-auto max-w-5xl px-4 sm:px-6 py-6">
-      <div class="flex gap-1 border-b border-slate-200 mb-6 overflow-x-auto">
-        <button data-tab="brand" class="tab-btn px-4 py-3 text-sm font-semibold text-slate-500 whitespace-nowrap tab-active">Marca</button>
-        <button data-tab="products" class="tab-btn px-4 py-3 text-sm font-semibold text-slate-500 whitespace-nowrap">Productos</button>
-        <button data-tab="orders" class="tab-btn px-4 py-3 text-sm font-semibold text-slate-500 whitespace-nowrap">Pedidos</button>
-      </div>
+    <main class="dmain">
+      <span class="kicker">Panel administrativo</span>
+      <h1 id="section-title">Mi negocio</h1>
 
-      <div id="tab-brand" class="tab-panel">
-        <div class="rounded-2xl bg-white border border-slate-200 p-6 shadow-sm">
-          <h2 class="text-lg font-bold mb-5">Configuración de marca</h2>
-          <div class="grid sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nombre del kiosco</label>
-              <input id="brand-name" type="text" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
-            </div>
-            <div>
-              <label class="block text-sm font-semibold text-slate-700 mb-1.5">WhatsApp (solo números)</label>
-              <input id="brand-wa" type="text" placeholder="54911..." class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
-            </div>
-            <div>
-              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Color primario</label>
-              <input id="brand-primary" type="color" class="h-11 w-full rounded-xl border border-slate-200 cursor-pointer">
-            </div>
-            <div>
-              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Título del hero</label>
-              <input id="brand-hero-title" type="text" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
-            </div>
-            <div class="sm:col-span-2">
-              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Descripción del hero</label>
-              <textarea id="brand-hero-desc" rows="2" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#164a36]"></textarea>
-            </div>
-          </div>
-          <button id="save-brand" class="mt-5 rounded-xl bg-[#164a36] px-6 py-2.5 font-bold text-white hover:bg-[#1a5c44] transition">Guardar marca</button>
-          <p id="brand-msg" class="mt-3 text-sm text-[#164a36] hidden">Guardado correctamente. Refrescá el sitio del kiosco para ver los cambios.</p>
+      <section class="panel tab" id="tab-brand">
+        <h2>Configuración de marca</h2>
+        <div class="form">
+          <label>Nombre comercial<input id="brand-name" /></label>
+          <label>WhatsApp (solo números)<input id="brand-wa" placeholder="549261..." /></label>
+          <label class="wide">Título del hero<input id="brand-hero-title" /></label>
+          <label class="wide">Descripción<textarea id="brand-hero-desc" rows="2"></textarea></label>
         </div>
-      </div>
+        <div class="save-row">
+          <span class="msg" id="brand-msg">✓ Guardado</span>
+          <button class="btn primary small" id="save-brand">Guardar cambios</button>
+        </div>
+      </section>
 
-      <div id="tab-products" class="tab-panel hidden">
-        <div class="rounded-2xl bg-white border border-slate-200 p-6 shadow-sm mb-6">
-          <h2 class="text-lg font-bold mb-4">Agregar producto</h2>
-          <div class="grid sm:grid-cols-2 gap-3">
-            <input id="prod-name" type="text" placeholder="Nombre" class="rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
-            <input id="prod-category" type="text" placeholder="Categoría (Bebidas, Snacks...)" class="rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
-            <input id="prod-price" type="number" placeholder="Precio" min="0" class="rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
-            <input id="prod-desc" type="text" placeholder="Descripción corta" class="rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
-          </div>
-          <button id="add-prod" class="mt-4 rounded-xl bg-[#164a36] px-5 py-2.5 font-bold text-white hover:bg-[#1a5c44] transition">Agregar</button>
+      <section class="panel tab" id="tab-products" style="display:none">
+        <h2>Agregar producto</h2>
+        <div class="form" style="margin-bottom:12px">
+          <input id="prod-name" placeholder="Nombre" />
+          <input id="prod-category" placeholder="Categoría" />
+          <input id="prod-price" type="number" placeholder="Precio" min="0" />
+          <input id="prod-desc" placeholder="Descripción corta" />
         </div>
-        <div class="rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-sm">
-          <div class="px-6 py-4 border-b border-slate-100"><h2 class="font-bold">Productos actuales</h2></div>
-          <div id="products-list" class="divide-y divide-slate-100"></div>
-        </div>
-      </div>
+        <button class="btn primary small" id="add-prod">Agregar</button>
+        <div id="products-list" style="margin-top:18px"></div>
+      </section>
 
-      <div id="tab-orders" class="tab-panel hidden">
-        <div class="rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-sm">
-          <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-            <h2 class="font-bold">Pedidos recibidos</h2>
-            <button id="clear-orders" class="text-sm text-red-600 hover:underline">Limpiar todos</button>
-          </div>
-          <div id="orders-list" class="divide-y divide-slate-100"></div>
+      <section class="panel tab" id="tab-orders" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <h2 style="margin:0">Pedidos recibidos</h2>
+          <button class="del" id="clear-orders">Limpiar todos</button>
         </div>
-      </div>
-    </div>
+        <div id="orders-list"></div>
+      </section>
+    </main>
   </div>
 
   <script>
     (function () {
-      'use strict';
       const STORAGE_KEY = 'nuovo_market_data_v1';
-      const ADMIN_PASS = 'admin123';
-      const SESSION_KEY = 'nuovo_market_admin_session';
-
-      const DEFAULT_DATA = {
+      const PASS = 'admin123';
+      const SESSION = 'nuovo_market_admin_session';
+      const DEFAULT = {
         brand: {
           name: 'Nuovo Market',
-          whatsapp: '5491112345678',
-          primary: '#164a36',
+          whatsapp: '5492615551040',
           heroTitle: 'Todo lo que necesitás, cerca y rápido',
           heroDesc: 'Bebidas, snacks, cigarrillos, golosinas y más. Pedí por WhatsApp y retirás o coordinamos entrega en el barrio.'
         },
@@ -138,164 +195,145 @@
         orders: []
       };
 
-      function loadData() {
+      function load() {
         try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) {
-            const d = structuredClone(DEFAULT_DATA);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
-            return d;
-          }
-          return JSON.parse(raw);
-        } catch (e) { return structuredClone(DEFAULT_DATA); }
+          const r = localStorage.getItem(STORAGE_KEY);
+          if (!r) { const d = structuredClone(DEFAULT); localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); return d; }
+          return JSON.parse(r);
+        } catch { return structuredClone(DEFAULT); }
       }
-      function saveData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+      function save(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
 
-      let data = loadData();
+      let data = load();
 
-      function formatPrice(n) {
+      function money(n) {
         return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(n);
       }
-      function formatDate(iso) {
+      function date(iso) {
         try { return new Date(iso).toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' }); }
         catch { return iso; }
       }
 
-      function isLogged() { return sessionStorage.getItem(SESSION_KEY) === '1'; }
       function showApp() {
-        document.getElementById('login-screen').classList.add('hidden');
-        document.getElementById('admin-app').classList.remove('hidden');
-        loadBrandForm();
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('admin-app').classList.add('show');
+        loadBrand();
         renderProducts();
         renderOrders();
       }
 
-      if (isLogged()) showApp();
+      if (sessionStorage.getItem(SESSION) === '1') showApp();
 
-      document.getElementById('login-btn').addEventListener('click', () => {
-        if (document.getElementById('login-pass').value === ADMIN_PASS) {
-          sessionStorage.setItem(SESSION_KEY, '1');
+      document.getElementById('login-btn').onclick = () => {
+        if (document.getElementById('login-pass').value === PASS) {
+          sessionStorage.setItem(SESSION, '1');
           showApp();
-        } else { alert('Contraseña incorrecta'); }
-      });
+        } else alert('Contraseña incorrecta');
+      };
 
-      document.getElementById('logout-btn').addEventListener('click', () => {
-        sessionStorage.removeItem(SESSION_KEY);
+      document.getElementById('logout-btn').onclick = () => {
+        sessionStorage.removeItem(SESSION);
         location.reload();
+      };
+
+      document.querySelectorAll('.side nav button').forEach(btn => {
+        btn.onclick = () => {
+          document.querySelectorAll('.side nav button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.querySelectorAll('.tab').forEach(t => t.style.display = 'none');
+          document.getElementById('tab-' + btn.dataset.tab).style.display = 'block';
+          document.getElementById('section-title').textContent =
+            btn.dataset.tab === 'brand' ? 'Mi negocio' : btn.dataset.tab === 'products' ? 'Productos' : 'Pedidos';
+        };
       });
 
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-active'));
-          btn.classList.add('tab-active');
-          document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
-          document.getElementById('tab-' + btn.dataset.tab).classList.remove('hidden');
-        });
-      });
-
-      function loadBrandForm() {
+      function loadBrand() {
         const b = data.brand;
         document.getElementById('brand-name').value = b.name || '';
         document.getElementById('brand-wa').value = b.whatsapp || '';
-        document.getElementById('brand-primary').value = b.primary || '#164a36';
         document.getElementById('brand-hero-title').value = b.heroTitle || '';
         document.getElementById('brand-hero-desc').value = b.heroDesc || '';
+        document.getElementById('side-name').textContent = b.name || 'Nuovo Market';
       }
 
-      document.getElementById('save-brand').addEventListener('click', () => {
+      document.getElementById('save-brand').onclick = () => {
         data.brand.name = document.getElementById('brand-name').value.trim() || 'Nuovo Market';
-        data.brand.whatsapp = document.getElementById('brand-wa').value.replace(/\\D/g, '') || '5491112345678';
-        data.brand.primary = document.getElementById('brand-primary').value;
+        data.brand.whatsapp = document.getElementById('brand-wa').value.replace(/\D/g, '') || '5492615551040';
         data.brand.heroTitle = document.getElementById('brand-hero-title').value.trim();
         data.brand.heroDesc = document.getElementById('brand-hero-desc').value.trim();
-        saveData(data);
-        const msg = document.getElementById('brand-msg');
-        msg.classList.remove('hidden');
-        setTimeout(() => msg.classList.add('hidden'), 4000);
-      });
+        save(data);
+        document.getElementById('side-name').textContent = data.brand.name;
+        const m = document.getElementById('brand-msg');
+        m.classList.add('show');
+        setTimeout(() => m.classList.remove('show'), 3000);
+      };
 
       function renderProducts() {
         const list = document.getElementById('products-list');
-        list.innerHTML = '';
         if (!data.products.length) {
-          list.innerHTML = '<p class="p-6 text-slate-500 text-sm">No hay productos. Agregá el primero arriba.</p>';
+          list.innerHTML = '<p style="font-size:13px;color:#7b857e">No hay productos.</p>';
           return;
         }
-        data.products.forEach(p => {
-          const row = document.createElement('div');
-          row.className = 'flex items-center justify-between gap-4 px-6 py-4';
-          row.innerHTML = `
-            <div class="min-w-0">
-              <p class="font-semibold truncate">${p.name}</p>
-              <p class="text-sm text-slate-500">${p.category || '—'} · ${formatPrice(p.price)}</p>
-            </div>
-            <button data-id="${p.id}" class="delete-prod text-sm text-red-600 hover:underline shrink-0">Eliminar</button>
-          `;
-          list.appendChild(row);
-        });
-        list.querySelectorAll('.delete-prod').forEach(btn => {
-          btn.addEventListener('click', () => {
-            if (!confirm('¿Eliminar este producto?')) return;
+        list.innerHTML = data.products.map(p => `
+          <div class="row">
+            <div><b>${p.name}</b><div class="meta">${p.category || '—'} · ${money(p.price)}</div></div>
+            <button class="del" data-id="${p.id}">Eliminar</button>
+          </div>`).join('');
+        list.querySelectorAll('.del').forEach(btn => {
+          btn.onclick = () => {
+            if (!confirm('¿Eliminar?')) return;
             data.products = data.products.filter(p => p.id !== btn.dataset.id);
-            saveData(data);
+            save(data);
             renderProducts();
-          });
+          };
         });
       }
 
-      document.getElementById('add-prod').addEventListener('click', () => {
+      document.getElementById('add-prod').onclick = () => {
         const name = document.getElementById('prod-name').value.trim();
-        const category = document.getElementById('prod-category').value.trim();
-        const price = parseInt(document.getElementById('prod-price').value, 10) || 0;
-        const description = document.getElementById('prod-desc').value.trim();
-        if (!name) { alert('El nombre es obligatorio'); return; }
-        data.products.push({ id: 'p' + Date.now(), name, category: category || 'General', price, description });
-        saveData(data);
+        if (!name) return alert('Nombre obligatorio');
+        data.products.push({
+          id: 'p' + Date.now(),
+          name,
+          category: document.getElementById('prod-category').value.trim() || 'General',
+          price: parseInt(document.getElementById('prod-price').value, 10) || 0,
+          description: document.getElementById('prod-desc').value.trim()
+        });
+        save(data);
         renderProducts();
-        document.getElementById('prod-name').value = '';
-        document.getElementById('prod-category').value = '';
-        document.getElementById('prod-price').value = '';
-        document.getElementById('prod-desc').value = '';
-      });
+        ['prod-name','prod-category','prod-price','prod-desc'].forEach(id => document.getElementById(id).value = '');
+      };
 
       function renderOrders() {
         const list = document.getElementById('orders-list');
-        list.innerHTML = '';
         if (!data.orders.length) {
-          list.innerHTML = '<p class="p-6 text-slate-500 text-sm">Todavía no hay pedidos. Hacé una prueba desde el sitio del kiosco.</p>';
+          list.innerHTML = '<p style="font-size:13px;color:#7b857e">Todavía no hay pedidos. Probá desde el sitio público.</p>';
           return;
         }
-        data.orders.forEach(o => {
-          const row = document.createElement('div');
-          row.className = 'px-6 py-4';
-          row.innerHTML = `
-            <div class="flex flex-wrap items-start justify-between gap-2">
-              <div>
-                <p class="font-semibold">${o.productName} × ${o.quantity}</p>
-                <p class="text-sm text-slate-600">${o.customerName} · ${o.customerPhone}</p>
-                ${o.note ? `<p class="text-sm text-slate-500 mt-0.5">Nota: ${o.note}</p>` : ''}
-              </div>
-              <div class="text-right">
-                <p class="font-bold">${formatPrice(o.total)}</p>
-                <p class="text-xs text-slate-400">${formatDate(o.createdAt)}</p>
-              </div>
+        list.innerHTML = data.orders.map(o => `
+          <div class="row">
+            <div>
+              <b>${o.productName} × ${o.quantity}</b>
+              <div class="meta">${o.customerName} · ${o.customerPhone}${o.note ? ' · ' + o.note : ''}</div>
             </div>
-          `;
-          list.appendChild(row);
-        });
+            <div style="text-align:right">
+              <b>${money(o.total)}</b>
+              <div class="meta">${date(o.createdAt)}</div>
+            </div>
+          </div>`).join('');
       }
 
-      document.getElementById('clear-orders').addEventListener('click', () => {
+      document.getElementById('clear-orders').onclick = () => {
         if (!confirm('¿Borrar todos los pedidos?')) return;
         data.orders = [];
-        saveData(data);
+        save(data);
         renderOrders();
-      });
+      };
 
-      window.addEventListener('storage', (e) => {
+      window.addEventListener('storage', e => {
         if (e.key === STORAGE_KEY) {
-          data = loadData();
-          loadBrandForm();
+          data = load();
+          loadBrand();
           renderProducts();
           renderOrders();
         }
