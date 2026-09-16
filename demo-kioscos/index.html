@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Smartbarrio: infraestructura digital para kioscos y comercios de barrio. Demo comercial." />
+  <title>Smartbarrio | Demo para Kioscos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .gradient-hero { background: linear-gradient(135deg, #0f172a 0%, #1e293b 45%, #164a36 100%); }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -12px rgba(22, 74, 54, 0.25); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+  <header class="fixed top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="flex h-16 items-center justify-between">
+        <a href="#" class="flex items-center gap-2.5">
+          <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-[#164a36] text-sm font-black text-[#d7ef47]">SB</span>
+          <span class="text-lg font-black tracking-tight">Smartbarrio</span>
+        </a>
+        <div class="flex items-center gap-4">
+          <a href="nuovo-market/index.html" class="hidden sm:inline-flex text-sm font-semibold text-slate-600 hover:text-[#164a36] transition">Ver demo Kiosco</a>
+          <a href="nuovo-market/index.html" class="rounded-full bg-[#164a36] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#1a5c44] transition shadow-sm">Probar demo</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="gradient-hero pt-28 pb-20 text-white">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="max-w-3xl">
+          <p class="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#d7ef47] ring-1 ring-white/20">
+            Demo comercial · Kioscos y comercios de barrio
+          </p>
+          <h1 class="text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl leading-tight">
+            Tu kiosco en digital<br/>
+            <span class="text-[#d7ef47]">en menos de 24 horas</span>
+          </h1>
+          <p class="mt-6 text-lg sm:text-xl text-slate-200 leading-relaxed max-w-2xl">
+            Smartbarrio es la infraestructura digital pensada para negocios de barrio.
+            Catálogo online, pedidos por WhatsApp, panel de administración simple y presencia profesional sin complicaciones técnicas.
+          </p>
+          <div class="mt-10 flex flex-col sm:flex-row gap-4">
+            <a href="nuovo-market/index.html" class="inline-flex items-center justify-center rounded-xl bg-white px-7 py-4 text-base font-bold text-slate-900 hover:bg-[#f0f5d8] transition shadow-lg">
+              Ver demo Kiosco Nuovo Market →
+            </a>
+            <a href="#beneficios" class="inline-flex items-center justify-center rounded-xl border-2 border-white/30 px-7 py-4 text-base font-bold text-white hover:bg-white/10 transition">
+              ¿Por qué Smartbarrio?
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl">
+          <div class="rounded-2xl bg-white/10 backdrop-blur border border-white/10 p-5">
+            <p class="text-3xl font-black">24h</p>
+            <p class="mt-1 text-sm text-slate-300">Para estar online</p>
+          </div>
+          <div class="rounded-2xl bg-white/10 backdrop-blur border border-white/10 p-5">
+            <p class="text-3xl font-black">0</p>
+            <p class="mt-1 text-sm text-slate-300">Código que mantener</p>
+          </div>
+          <div class="rounded-2xl bg-white/10 backdrop-blur border border-white/10 p-5">
+            <p class="text-3xl font-black">100%</p>
+            <p class="mt-1 text-sm text-slate-300">Mobile first</p>
+          </div>
+          <div class="rounded-2xl bg-white/10 backdrop-blur border border-white/10 p-5">
+            <p class="text-3xl font-black">WA</p>
+            <p class="mt-1 text-sm text-slate-300">Pedidos directos</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="beneficios" class="py-20 bg-white">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <p class="text-sm font-black uppercase tracking-widest text-[#164a36] mb-3">Beneficios reales</p>
+          <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
+            Lo que un kiosco gana con Smartbarrio
+          </h2>
+          <p class="mt-4 text-lg text-slate-600">
+            No es una página más. Es una herramienta de venta y gestión pensada para el ritmo de un comercio de barrio.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <article class="rounded-2xl border border-slate-200 bg-slate-50 p-7 card-hover transition duration-300">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#eaf0e9] text-2xl">📱</div>
+            <h3 class="text-xl font-bold text-slate-900">Presencia profesional</h3>
+            <p class="mt-2 text-slate-600 leading-relaxed">Tu kiosco se ve serio y moderno en el celular del cliente. Genera confianza y más consultas.</p>
+          </article>
+          <article class="rounded-2xl border border-slate-200 bg-slate-50 p-7 card-hover transition duration-300">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#eaf0e9] text-2xl">🛒</div>
+            <h3 class="text-xl font-bold text-slate-900">Catálogo siempre actualizado</h3>
+            <p class="mt-2 text-slate-600 leading-relaxed">Agregá productos, cambiá precios y promociones desde el panel. Sin depender de nadie.</p>
+          </article>
+          <article class="rounded-2xl border border-slate-200 bg-slate-50 p-7 card-hover transition duration-300">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#eaf0e9] text-2xl">💬</div>
+            <h3 class="text-xl font-bold text-slate-900">Pedidos por WhatsApp</h3>
+            <p class="mt-2 text-slate-600 leading-relaxed">El cliente elige, completa datos y te llega el pedido listo en WhatsApp. Cero fricción.</p>
+          </article>
+          <article class="rounded-2xl border border-slate-200 bg-slate-50 p-7 card-hover transition duration-300">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#eaf0e9] text-2xl">⚙️</div>
+            <h3 class="text-xl font-bold text-slate-900">Panel simple de administración</h3>
+            <p class="mt-2 text-slate-600 leading-relaxed">Marca, productos, pedidos y cotizaciones en un solo lugar. Pensado para dueños, no para programadores.</p>
+          </article>
+          <article class="rounded-2xl border border-slate-200 bg-slate-50 p-7 card-hover transition duration-300">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#eaf0e9] text-2xl">⚡</div>
+            <h3 class="text-xl font-bold text-slate-900">Rápido y sin complicaciones</h3>
+            <p class="mt-2 text-slate-600 leading-relaxed">En menos de un día tenés tu sitio listo. Hosting incluido y mantenimiento continuo.</p>
+          </article>
+          <article class="rounded-2xl border border-slate-200 bg-slate-50 p-7 card-hover transition duration-300">
+            <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#eaf0e9] text-2xl">📈</div>
+            <h3 class="text-xl font-bold text-slate-900">Evoluciona con tu negocio</h3>
+            <p class="mt-2 text-slate-600 leading-relaxed">Empezás con catálogo + WhatsApp. Después sumás módulos: turnos, pagos, stock, marketplace.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-slate-100">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <p class="text-sm font-black uppercase tracking-widest text-[#164a36] mb-3">Proceso simple</p>
+          <h2 class="text-3xl sm:text-4xl font-black tracking-tight">De la idea al kiosco online</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#164a36] text-xl font-black text-white">1</div>
+            <h3 class="text-lg font-bold">Contanos de tu kiosco</h3>
+            <p class="mt-2 text-slate-600">Nombre, productos principales, WhatsApp y estilo. En 15 minutos armamos el brief.</p>
+          </div>
+          <div class="text-center">
+            <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#164a36] text-xl font-black text-white">2</div>
+            <h3 class="text-lg font-bold">Configuramos y publicamos</h3>
+            <p class="mt-2 text-slate-600">Armamos el catálogo, colores de marca y panel. En menos de 24 hs está online.</p>
+          </div>
+          <div class="text-center">
+            <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#164a36] text-xl font-black text-white">3</div>
+            <h3 class="text-lg font-bold">Empezás a recibir pedidos</h3>
+            <p class="mt-2 text-slate-600">Compartís el link. Los clientes piden y te llega todo por WhatsApp listo para preparar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-white">
+      <div class="mx-auto max-w-4xl px-4 sm:px-6 text-center">
+        <div class="rounded-3xl bg-gradient-to-br from-slate-900 to-[#164a36] p-10 sm:p-14 text-white shadow-2xl">
+          <p class="text-sm font-bold uppercase tracking-widest text-[#d7ef47] mb-3">Demo interactiva</p>
+          <h2 class="text-3xl sm:text-4xl font-black tracking-tight">Probalo con Kiosco Nuovo Market</h2>
+          <p class="mt-4 text-lg text-slate-200 max-w-xl mx-auto">
+            Entrá a la vista del cliente, mirá el catálogo, simulá un pedido y después abrí el panel de administración para cambiar productos y marca en tiempo real.
+          </p>
+          <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="nuovo-market/index.html" class="inline-flex items-center justify-center rounded-xl bg-white px-8 py-4 text-base font-bold text-slate-900 hover:bg-[#f0f5d8] transition">
+              Ver sitio del kiosco
+            </a>
+            <a href="nuovo-market/admin.html" class="inline-flex items-center justify-center rounded-xl border-2 border-white/40 px-8 py-4 text-base font-bold text-white hover:bg-white/10 transition">
+              Abrir panel admin
+            </a>
+          </div>
+          <p class="mt-6 text-sm text-slate-400">Contraseña admin de demo: <span class="font-mono text-[#d7ef47]">admin123</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 bg-slate-50 border-t border-slate-200">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <p class="text-center text-sm font-semibold text-slate-500 mb-6">Ideal para</p>
+        <div class="flex flex-wrap justify-center gap-3 text-sm font-medium text-slate-700">
+          <span class="rounded-full bg-white border border-slate-200 px-4 py-2">Kioscos</span>
+          <span class="rounded-full bg-white border border-slate-200 px-4 py-2">Maxikioscos</span>
+          <span class="rounded-full bg-white border border-slate-200 px-4 py-2">Despensas</span>
+          <span class="rounded-full bg-white border border-slate-200 px-4 py-2">Almacenes de barrio</span>
+          <span class="rounded-full bg-white border border-slate-200 px-4 py-2">Minimercados</span>
+          <span class="rounded-full bg-white border border-slate-200 px-4 py-2">Negocios de cercanía</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-slate-950 text-slate-400 py-12">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-2.5">
+        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#164a36] text-xs font-black text-[#d7ef47]">SB</span>
+        <span class="font-bold text-white">Smartbarrio</span>
+      </div>
+      <p class="text-sm">Demo comercial · Septiembre 2026 · Infraestructura digital para negocios locales</p>
+    </div>
+  </footer>
+</body>
+</html>

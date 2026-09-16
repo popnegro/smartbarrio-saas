@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Nuovo Market - Kiosco de barrio. Catálogo online y pedidos por WhatsApp." />
+  <title>Nuovo Market | Kiosco de barrio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary: #164a36; --primary-hover: #1a5c44; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="flex h-16 items-center justify-between">
+        <a href="#" class="flex items-center gap-2.5">
+          <span id="logo-badge" class="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-sm font-black text-white">NM</span>
+          <span id="brand-name" class="text-lg font-black tracking-tight">Nuovo Market</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600">
+          <a href="#catalogo" class="hover:text-[#164a36] transition">Catálogo</a>
+          <a href="#pedidos" class="hover:text-[#164a36] transition">Cómo pedir</a>
+          <a href="admin.html" class="text-slate-400 hover:text-[#164a36] transition">Admin</a>
+        </nav>
+        <a id="wa-header" href="#" target="_blank" class="rounded-full bg-green-600 px-4 py-2 text-sm font-bold text-white hover:bg-green-700 transition">WhatsApp</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="bg-slate-900 text-white pt-12 pb-16">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="max-w-2xl">
+          <p class="mb-3 text-xs font-bold uppercase tracking-widest text-[#d7ef47]">Kiosco de barrio · Abierto todos los días</p>
+          <h1 id="hero-title" class="text-4xl sm:text-5xl font-black tracking-tight leading-tight">Todo lo que necesitás,<br/>cerca y rápido</h1>
+          <p id="hero-desc" class="mt-5 text-lg text-slate-300 leading-relaxed">Bebidas, snacks, cigarrillos, golosinas y más. Pedí por WhatsApp y retirás o coordinamos entrega en el barrio.</p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#catalogo" class="rounded-xl bg-[#164a36] px-6 py-3.5 text-sm font-bold hover:bg-[#1a5c44] transition">Ver catálogo</a>
+            <a id="wa-hero" href="#" target="_blank" class="rounded-xl border border-white/30 px-6 py-3.5 text-sm font-bold hover:bg-white/10 transition">Escribinos</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="catalogo" class="py-16">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="mb-10">
+          <p class="text-sm font-black uppercase tracking-widest text-[#164a36] mb-2">Catálogo</p>
+          <h2 class="text-3xl font-black tracking-tight">Productos disponibles</h2>
+          <p class="mt-2 text-slate-600">Tocá "Pedir" y te llevamos el pedido a WhatsApp listo para confirmar.</p>
+        </div>
+        <div id="products-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+      </div>
+    </section>
+
+    <section id="pedidos" class="py-16 bg-white border-t border-slate-200">
+      <div class="mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="text-center max-w-xl mx-auto mb-12">
+          <h2 class="text-3xl font-black tracking-tight">Cómo pedir es simple</h2>
+          <p class="mt-3 text-slate-600">Tres pasos y listo. Sin apps ni registros.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8 text-center">
+          <div>
+            <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#eaf0e9] text-lg font-black text-[#164a36]">1</div>
+            <h3 class="font-bold">Elegí el producto</h3>
+            <p class="mt-2 text-sm text-slate-600">Mirás el catálogo y tocás "Pedir".</p>
+          </div>
+          <div>
+            <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#eaf0e9] text-lg font-black text-[#164a36]">2</div>
+            <h3 class="font-bold">Completá tus datos</h3>
+            <p class="mt-2 text-sm text-slate-600">Nombre, WhatsApp y cantidad.</p>
+          </div>
+          <div>
+            <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#eaf0e9] text-lg font-black text-[#164a36]">3</div>
+            <h3 class="font-bold">Confirmamos por WA</h3>
+            <p class="mt-2 text-sm text-slate-600">Te llega el mensaje y te respondemos.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-slate-900 text-slate-400 py-10">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-2">
+        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-xs font-black text-slate-900">NM</span>
+        <span id="footer-name" class="font-bold text-white">Nuovo Market</span>
+      </div>
+      <p class="text-sm">Demo Smartbarrio · Powered by infraestructura digital para barrio</p>
+    </div>
+  </footer>
+
+  <div id="order-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 p-4">
+    <div class="w-full max-w-md rounded-2xl bg-white shadow-2xl overflow-hidden">
+      <div class="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+        <h3 class="text-lg font-bold">Pedir producto</h3>
+        <button id="close-modal" class="text-slate-400 hover:text-slate-700 text-2xl leading-none">&times;</button>
+      </div>
+      <div class="p-6">
+        <p id="modal-product-name" class="font-bold text-slate-900 mb-1"></p>
+        <p id="modal-product-price" class="text-[#164a36] font-semibold mb-5"></p>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Cantidad</label>
+            <input id="order-qty" type="number" min="1" value="1" class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Tu nombre</label>
+            <input id="order-name" type="text" placeholder="Ej: Juan" class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1.5">WhatsApp</label>
+            <input id="order-phone" type="tel" placeholder="+54 9 11 ..." class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nota (opcional)</label>
+            <input id="order-note" type="text" placeholder="Ej: sin hielo" class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
+          </div>
+        </div>
+        <button id="confirm-order" class="mt-6 w-full rounded-xl bg-[#164a36] py-3.5 font-bold text-white hover:bg-[#1a5c44] transition">
+          Confirmar y abrir WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 right-6 z-50 hidden rounded-xl bg-slate-900 px-5 py-3 text-sm font-medium text-white shadow-lg"></div>
+
+  <script>
+    (function () {
+      'use strict';
+      const STORAGE_KEY = 'nuovo_market_data_v1';
+      const DEFAULT_DATA = {
+        brand: {
+          name: 'Nuovo Market',
+          whatsapp: '5491112345678',
+          primary: '#164a36',
+          heroTitle: 'Todo lo que necesitás, cerca y rápido',
+          heroDesc: 'Bebidas, snacks, cigarrillos, golosinas y más. Pedí por WhatsApp y retirás o coordinamos entrega en el barrio.'
+        },
+        products: [
+          { id: 'p1', name: 'Coca-Cola 2.25L', category: 'Bebidas', price: 2800, description: 'Gaseosa clásica familiar' },
+          { id: 'p2', name: 'Agua Villavicencio 2L', category: 'Bebidas', price: 1500, description: 'Agua mineral sin gas' },
+          { id: 'p3', name: 'Cerveza Quilmes 1L', category: 'Bebidas', price: 2200, description: 'Cerveza rubia' },
+          { id: 'p4', name: 'Papas Lays Clásicas', category: 'Snacks', price: 1800, description: 'Bolsa mediana' },
+          { id: 'p5', name: 'Alfajor Havanna', category: 'Golosinas', price: 1200, description: 'Doble dulce de leche' },
+          { id: 'p6', name: 'Cigarrillos Marlboro', category: 'Cigarrillos', price: 3500, description: 'Box 20 unidades' },
+          { id: 'p7', name: 'Yogur La Serenísima', category: 'Lácteos', price: 1100, description: 'Natural o frutado' },
+          { id: 'p8', name: 'Galletitas Oreo', category: 'Golosinas', price: 1600, description: 'Paquete clásico' },
+          { id: 'p9', name: 'Energizante Red Bull', category: 'Bebidas', price: 2500, description: 'Lata 250ml' }
+        ],
+        orders: []
+      };
+
+      function loadData() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return structuredClone(DEFAULT_DATA);
+          return JSON.parse(raw);
+        } catch (e) { return structuredClone(DEFAULT_DATA); }
+      }
+      function saveData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+
+      let data = loadData();
+      let currentProduct = null;
+
+      function applyBrand() {
+        const b = data.brand;
+        document.getElementById('brand-name').textContent = b.name;
+        document.getElementById('footer-name').textContent = b.name;
+        document.getElementById('hero-title').textContent = b.heroTitle;
+        document.getElementById('hero-desc').textContent = b.heroDesc;
+        document.getElementById('logo-badge').textContent = b.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+        document.documentElement.style.setProperty('--primary', b.primary);
+        const waLink = `https://wa.me/${b.whatsapp.replace(/\\D/g, '')}`;
+        document.getElementById('wa-header').href = waLink;
+        document.getElementById('wa-hero').href = waLink;
+      }
+
+      function formatPrice(n) {
+        return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(n);
+      }
+
+      function renderProducts() {
+        const grid = document.getElementById('products-grid');
+        grid.innerHTML = '';
+        if (!data.products.length) {
+          grid.innerHTML = '<p class="col-span-full text-center text-slate-500 py-12">No hay productos cargados. Agregalos desde el panel admin.</p>';
+          return;
+        }
+        data.products.forEach(p => {
+          const card = document.createElement('article');
+          card.className = 'flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm hover:shadow-md transition';
+          card.innerHTML = `
+            <div class="mb-3"><span class="inline-block rounded-full bg-[#eaf0e9] px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-[#164a36]">${p.category || 'Producto'}</span></div>
+            <h3 class="text-lg font-bold text-slate-900">${p.name}</h3>
+            <p class="mt-1.5 flex-1 text-sm text-slate-600">${p.description || ''}</p>
+            <p class="mt-4 text-lg font-black text-slate-900">${formatPrice(p.price)}</p>
+            <button data-id="${p.id}" class="order-btn mt-4 w-full rounded-xl border border-slate-200 py-2.5 text-sm font-bold text-slate-700 hover:border-[#164a36] hover:text-[#164a36] transition">Pedir</button>
+          `;
+          grid.appendChild(card);
+        });
+        grid.querySelectorAll('.order-btn').forEach(btn => {
+          btn.addEventListener('click', () => openOrderModal(btn.dataset.id));
+        });
+      }
+
+      function openOrderModal(id) {
+        currentProduct = data.products.find(p => p.id === id);
+        if (!currentProduct) return;
+        document.getElementById('modal-product-name').textContent = currentProduct.name;
+        document.getElementById('modal-product-price').textContent = formatPrice(currentProduct.price);
+        document.getElementById('order-qty').value = 1;
+        document.getElementById('order-name').value = '';
+        document.getElementById('order-phone').value = '';
+        document.getElementById('order-note').value = '';
+        const modal = document.getElementById('order-modal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+
+      function closeModal() {
+        const modal = document.getElementById('order-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        currentProduct = null;
+      }
+
+      function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.remove('hidden');
+        setTimeout(() => t.classList.add('hidden'), 3000);
+      }
+
+      function confirmOrder() {
+        if (!currentProduct) return;
+        const qty = parseInt(document.getElementById('order-qty').value, 10) || 1;
+        const name = document.getElementById('order-name').value.trim();
+        const phone = document.getElementById('order-phone').value.trim();
+        const note = document.getElementById('order-note').value.trim();
+        if (!name || name.length < 2) { showToast('Ingresá tu nombre'); return; }
+        if (!phone || phone.replace(/\\D/g, '').length < 8) { showToast('Ingresá un WhatsApp válido'); return; }
+
+        const total = currentProduct.price * qty;
+        const order = {
+          id: 'ord_' + Date.now(),
+          productId: currentProduct.id,
+          productName: currentProduct.name,
+          quantity: qty,
+          unitPrice: currentProduct.price,
+          total,
+          customerName: name,
+          customerPhone: phone,
+          note,
+          createdAt: new Date().toISOString(),
+          status: 'nuevo'
+        };
+        data.orders.unshift(order);
+        saveData(data);
+
+        const msg = encodeURIComponent(
+          `¡Hola! Quiero pedir desde Nuovo Market:%0A%0A` +
+          `*Producto:* ${currentProduct.name}%0A` +
+          `*Cantidad:* ${qty}%0A` +
+          `*Total:* ${formatPrice(total)}%0A` +
+          `*Nombre:* ${name}%0A` +
+          (note ? `*Nota:* ${note}%0A` : '') +
+          `%0AGracias!`
+        );
+        const wa = data.brand.whatsapp.replace(/\\D/g, '');
+        window.open(`https://wa.me/${wa}?text=${msg}`, '_blank');
+        closeModal();
+        showToast('Pedido enviado. Se abrió WhatsApp.');
+      }
+
+      document.getElementById('close-modal').addEventListener('click', closeModal);
+      document.getElementById('order-modal').addEventListener('click', (e) => { if (e.target.id === 'order-modal') closeModal(); });
+      document.getElementById('confirm-order').addEventListener('click', confirmOrder);
+
+      applyBrand();
+      renderProducts();
+
+      window.addEventListener('storage', (e) => {
+        if (e.key === STORAGE_KEY) {
+          data = loadData();
+          applyBrand();
+          renderProducts();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

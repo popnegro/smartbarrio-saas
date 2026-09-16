@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · Nuovo Market</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .tab-active { border-bottom: 2px solid #164a36; color: #164a36; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900 antialiased min-h-screen">
+
+  <div id="login-screen" class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-sm rounded-2xl bg-white p-8 shadow-xl">
+      <div class="text-center mb-6">
+        <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 text-sm font-black text-white">NM</div>
+        <h1 class="text-xl font-black">Panel Admin</h1>
+        <p class="text-sm text-slate-500 mt-1">Nuovo Market · Demo</p>
+      </div>
+      <label class="block text-sm font-semibold text-slate-700 mb-1.5">Contraseña</label>
+      <input id="login-pass" type="password" value="admin123" class="w-full rounded-xl border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#164a36]" placeholder="admin123">
+      <button id="login-btn" class="mt-4 w-full rounded-xl bg-[#164a36] py-3 font-bold text-white hover:bg-[#1a5c44] transition">Ingresar</button>
+      <p class="mt-4 text-center text-xs text-slate-400">Demo: usá <strong>admin123</strong></p>
+    </div>
+  </div>
+
+  <div id="admin-app" class="hidden">
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6">
+        <div class="flex h-14 items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-xs font-black text-white">NM</span>
+            <span class="font-bold">Admin · Nuovo Market</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <a href="index.html" target="_blank" class="text-sm font-semibold text-[#164a36] hover:underline">Ver sitio →</a>
+            <button id="logout-btn" class="text-sm text-slate-500 hover:text-slate-800">Salir</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 py-6">
+      <div class="flex gap-1 border-b border-slate-200 mb-6 overflow-x-auto">
+        <button data-tab="brand" class="tab-btn px-4 py-3 text-sm font-semibold text-slate-500 whitespace-nowrap tab-active">Marca</button>
+        <button data-tab="products" class="tab-btn px-4 py-3 text-sm font-semibold text-slate-500 whitespace-nowrap">Productos</button>
+        <button data-tab="orders" class="tab-btn px-4 py-3 text-sm font-semibold text-slate-500 whitespace-nowrap">Pedidos</button>
+      </div>
+
+      <div id="tab-brand" class="tab-panel">
+        <div class="rounded-2xl bg-white border border-slate-200 p-6 shadow-sm">
+          <h2 class="text-lg font-bold mb-5">Configuración de marca</h2>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nombre del kiosco</label>
+              <input id="brand-name" type="text" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1.5">WhatsApp (solo números)</label>
+              <input id="brand-wa" type="text" placeholder="54911..." class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Color primario</label>
+              <input id="brand-primary" type="color" class="h-11 w-full rounded-xl border border-slate-200 cursor-pointer">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Título del hero</label>
+              <input id="brand-hero-title" type="text" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Descripción del hero</label>
+              <textarea id="brand-hero-desc" rows="2" class="w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#164a36]"></textarea>
+            </div>
+          </div>
+          <button id="save-brand" class="mt-5 rounded-xl bg-[#164a36] px-6 py-2.5 font-bold text-white hover:bg-[#1a5c44] transition">Guardar marca</button>
+          <p id="brand-msg" class="mt-3 text-sm text-[#164a36] hidden">Guardado correctamente. Refrescá el sitio del kiosco para ver los cambios.</p>
+        </div>
+      </div>
+
+      <div id="tab-products" class="tab-panel hidden">
+        <div class="rounded-2xl bg-white border border-slate-200 p-6 shadow-sm mb-6">
+          <h2 class="text-lg font-bold mb-4">Agregar producto</h2>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <input id="prod-name" type="text" placeholder="Nombre" class="rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
+            <input id="prod-category" type="text" placeholder="Categoría (Bebidas, Snacks...)" class="rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
+            <input id="prod-price" type="number" placeholder="Precio" min="0" class="rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
+            <input id="prod-desc" type="text" placeholder="Descripción corta" class="rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#164a36]">
+          </div>
+          <button id="add-prod" class="mt-4 rounded-xl bg-[#164a36] px-5 py-2.5 font-bold text-white hover:bg-[#1a5c44] transition">Agregar</button>
+        </div>
+        <div class="rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-sm">
+          <div class="px-6 py-4 border-b border-slate-100"><h2 class="font-bold">Productos actuales</h2></div>
+          <div id="products-list" class="divide-y divide-slate-100"></div>
+        </div>
+      </div>
+
+      <div id="tab-orders" class="tab-panel hidden">
+        <div class="rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-sm">
+          <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+            <h2 class="font-bold">Pedidos recibidos</h2>
+            <button id="clear-orders" class="text-sm text-red-600 hover:underline">Limpiar todos</button>
+          </div>
+          <div id="orders-list" class="divide-y divide-slate-100"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+      const STORAGE_KEY = 'nuovo_market_data_v1';
+      const ADMIN_PASS = 'admin123';
+      const SESSION_KEY = 'nuovo_market_admin_session';
+
+      const DEFAULT_DATA = {
+        brand: {
+          name: 'Nuovo Market',
+          whatsapp: '5491112345678',
+          primary: '#164a36',
+          heroTitle: 'Todo lo que necesitás, cerca y rápido',
+          heroDesc: 'Bebidas, snacks, cigarrillos, golosinas y más. Pedí por WhatsApp y retirás o coordinamos entrega en el barrio.'
+        },
+        products: [
+          { id: 'p1', name: 'Coca-Cola 2.25L', category: 'Bebidas', price: 2800, description: 'Gaseosa clásica familiar' },
+          { id: 'p2', name: 'Agua Villavicencio 2L', category: 'Bebidas', price: 1500, description: 'Agua mineral sin gas' },
+          { id: 'p3', name: 'Cerveza Quilmes 1L', category: 'Bebidas', price: 2200, description: 'Cerveza rubia' },
+          { id: 'p4', name: 'Papas Lays Clásicas', category: 'Snacks', price: 1800, description: 'Bolsa mediana' },
+          { id: 'p5', name: 'Alfajor Havanna', category: 'Golosinas', price: 1200, description: 'Doble dulce de leche' },
+          { id: 'p6', name: 'Cigarrillos Marlboro', category: 'Cigarrillos', price: 3500, description: 'Box 20 unidades' },
+          { id: 'p7', name: 'Yogur La Serenísima', category: 'Lácteos', price: 1100, description: 'Natural o frutado' },
+          { id: 'p8', name: 'Galletitas Oreo', category: 'Golosinas', price: 1600, description: 'Paquete clásico' },
+          { id: 'p9', name: 'Energizante Red Bull', category: 'Bebidas', price: 2500, description: 'Lata 250ml' }
+        ],
+        orders: []
+      };
+
+      function loadData() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) {
+            const d = structuredClone(DEFAULT_DATA);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
+            return d;
+          }
+          return JSON.parse(raw);
+        } catch (e) { return structuredClone(DEFAULT_DATA); }
+      }
+      function saveData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+
+      let data = loadData();
+
+      function formatPrice(n) {
+        return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(n);
+      }
+      function formatDate(iso) {
+        try { return new Date(iso).toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' }); }
+        catch { return iso; }
+      }
+
+      function isLogged() { return sessionStorage.getItem(SESSION_KEY) === '1'; }
+      function showApp() {
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('admin-app').classList.remove('hidden');
+        loadBrandForm();
+        renderProducts();
+        renderOrders();
+      }
+
+      if (isLogged()) showApp();
+
+      document.getElementById('login-btn').addEventListener('click', () => {
+        if (document.getElementById('login-pass').value === ADMIN_PASS) {
+          sessionStorage.setItem(SESSION_KEY, '1');
+          showApp();
+        } else { alert('Contraseña incorrecta'); }
+      });
+
+      document.getElementById('logout-btn').addEventListener('click', () => {
+        sessionStorage.removeItem(SESSION_KEY);
+        location.reload();
+      });
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-active'));
+          btn.classList.add('tab-active');
+          document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+          document.getElementById('tab-' + btn.dataset.tab).classList.remove('hidden');
+        });
+      });
+
+      function loadBrandForm() {
+        const b = data.brand;
+        document.getElementById('brand-name').value = b.name || '';
+        document.getElementById('brand-wa').value = b.whatsapp || '';
+        document.getElementById('brand-primary').value = b.primary || '#164a36';
+        document.getElementById('brand-hero-title').value = b.heroTitle || '';
+        document.getElementById('brand-hero-desc').value = b.heroDesc || '';
+      }
+
+      document.getElementById('save-brand').addEventListener('click', () => {
+        data.brand.name = document.getElementById('brand-name').value.trim() || 'Nuovo Market';
+        data.brand.whatsapp = document.getElementById('brand-wa').value.replace(/\\D/g, '') || '5491112345678';
+        data.brand.primary = document.getElementById('brand-primary').value;
+        data.brand.heroTitle = document.getElementById('brand-hero-title').value.trim();
+        data.brand.heroDesc = document.getElementById('brand-hero-desc').value.trim();
+        saveData(data);
+        const msg = document.getElementById('brand-msg');
+        msg.classList.remove('hidden');
+        setTimeout(() => msg.classList.add('hidden'), 4000);
+      });
+
+      function renderProducts() {
+        const list = document.getElementById('products-list');
+        list.innerHTML = '';
+        if (!data.products.length) {
+          list.innerHTML = '<p class="p-6 text-slate-500 text-sm">No hay productos. Agregá el primero arriba.</p>';
+          return;
+        }
+        data.products.forEach(p => {
+          const row = document.createElement('div');
+          row.className = 'flex items-center justify-between gap-4 px-6 py-4';
+          row.innerHTML = `
+            <div class="min-w-0">
+              <p class="font-semibold truncate">${p.name}</p>
+              <p class="text-sm text-slate-500">${p.category || '—'} · ${formatPrice(p.price)}</p>
+            </div>
+            <button data-id="${p.id}" class="delete-prod text-sm text-red-600 hover:underline shrink-0">Eliminar</button>
+          `;
+          list.appendChild(row);
+        });
+        list.querySelectorAll('.delete-prod').forEach(btn => {
+          btn.addEventListener('click', () => {
+            if (!confirm('¿Eliminar este producto?')) return;
+            data.products = data.products.filter(p => p.id !== btn.dataset.id);
+            saveData(data);
+            renderProducts();
+          });
+        });
+      }
+
+      document.getElementById('add-prod').addEventListener('click', () => {
+        const name = document.getElementById('prod-name').value.trim();
+        const category = document.getElementById('prod-category').value.trim();
+        const price = parseInt(document.getElementById('prod-price').value, 10) || 0;
+        const description = document.getElementById('prod-desc').value.trim();
+        if (!name) { alert('El nombre es obligatorio'); return; }
+        data.products.push({ id: 'p' + Date.now(), name, category: category || 'General', price, description });
+        saveData(data);
+        renderProducts();
+        document.getElementById('prod-name').value = '';
+        document.getElementById('prod-category').value = '';
+        document.getElementById('prod-price').value = '';
+        document.getElementById('prod-desc').value = '';
+      });
+
+      function renderOrders() {
+        const list = document.getElementById('orders-list');
+        list.innerHTML = '';
+        if (!data.orders.length) {
+          list.innerHTML = '<p class="p-6 text-slate-500 text-sm">Todavía no hay pedidos. Hacé una prueba desde el sitio del kiosco.</p>';
+          return;
+        }
+        data.orders.forEach(o => {
+          const row = document.createElement('div');
+          row.className = 'px-6 py-4';
+          row.innerHTML = `
+            <div class="flex flex-wrap items-start justify-between gap-2">
+              <div>
+                <p class="font-semibold">${o.productName} × ${o.quantity}</p>
+                <p class="text-sm text-slate-600">${o.customerName} · ${o.customerPhone}</p>
+                ${o.note ? `<p class="text-sm text-slate-500 mt-0.5">Nota: ${o.note}</p>` : ''}
+              </div>
+              <div class="text-right">
+                <p class="font-bold">${formatPrice(o.total)}</p>
+                <p class="text-xs text-slate-400">${formatDate(o.createdAt)}</p>
+              </div>
+            </div>
+          `;
+          list.appendChild(row);
+        });
+      }
+
+      document.getElementById('clear-orders').addEventListener('click', () => {
+        if (!confirm('¿Borrar todos los pedidos?')) return;
+        data.orders = [];
+        saveData(data);
+        renderOrders();
+      });
+
+      window.addEventListener('storage', (e) => {
+        if (e.key === STORAGE_KEY) {
+          data = loadData();
+          loadBrandForm();
+          renderProducts();
+          renderOrders();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
