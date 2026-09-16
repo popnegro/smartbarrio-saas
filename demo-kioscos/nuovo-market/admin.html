@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · Nuovo Market</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #172019;
+      --muted: #69746c;
+      --line: #e6ebe6;
+      --paper: #f7f8f5;
+      --card: #fff;
+      --brand: #164a36;
+      --accent: #d7ef47;
+      --soft: #edf4e8;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: "DM Sans", sans-serif; min-height: 100vh; }
+    a, button { cursor: pointer; font: inherit; }
+    a { text-decoration: none; color: inherit; }
+
+    .login-wrap { min-height: 100vh; display: grid; place-items: center; padding: 20px; }
+    .login-box {
+      width: min(380px, 100%); background: #fff; border: 1px solid var(--line); border-radius: 17px; padding: 28px;
+    }
+    .login-box h1 { font-family: Manrope, sans-serif; font-size: 22px; margin: 12px 0 4px; letter-spacing: -.03em; }
+    .login-box p { font-size: 13px; color: var(--muted); margin: 0 0 18px; }
+    .brand-mark {
+      width: 36px; height: 36px; border-radius: 9px; background: var(--brand); color: var(--accent);
+      display: grid; place-items: center; font-size: 12px; font-weight: 800;
+    }
+    label { display: block; font-size: 11px; font-weight: 800; margin-bottom: 5px; }
+    input, textarea, select {
+      width: 100%; padding: 10px 12px; border: 1px solid #dde4dd; border-radius: 8px; background: #fff;
+    }
+    .btn {
+      border-radius: 10px; padding: 11px 15px; border: 1px solid var(--line);
+      font-weight: 750; font-size: 13px;
+    }
+    .btn.primary { background: var(--brand); color: #fff; border-color: var(--brand); width: 100%; margin-top: 14px; }
+    .hint { font-size: 11px; color: #7b857e; text-align: center; margin-top: 14px; }
+
+    .dash { display: none; min-height: 100vh; grid-template-columns: 230px 1fr; }
+    .dash.show { display: grid; }
+    .side {
+      background: #172019; color: #fff; padding: 20px 14px;
+    }
+    .side .brand { display: flex; align-items: center; gap: 9px; font-family: Manrope, sans-serif; font-weight: 800; margin-bottom: 22px; }
+    .side-biz {
+      border: 1px solid #344239; background: #202c24; border-radius: 10px; padding: 11px; margin-bottom: 16px; font-size: 12px;
+    }
+    .side-biz small { display: block; color: #96a39a; margin-top: 3px; }
+    .side nav button {
+      width: 100%; background: transparent; color: #9ca89f; border: 0; text-align: left;
+      padding: 10px; border-radius: 8px; font-size: 12px; margin-bottom: 2px;
+    }
+    .side nav button.active { background: #2b3a31; color: #fff; }
+    .view-public {
+      margin-top: 20px; width: 100%; border: 1px solid #344239; background: transparent; color: #c9d0ca;
+      border-radius: 8px; padding: 10px; font-size: 12px; font-weight: 700;
+    }
+
+    .dmain { padding: 28px; max-width: 980px; }
+    .kicker { font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: 800; color: #728077; }
+    .dmain h1 { font-family: Manrope, sans-serif; font-size: 28px; letter-spacing: -.04em; margin: 4px 0 20px; }
+
+    .panel {
+      background: #fff; border: 1px solid var(--line); border-radius: 13px; padding: 18px; margin-bottom: 14px;
+    }
+    .panel h2 { font-family: Manrope, sans-serif; font-size: 16px; margin: 0 0 14px; }
+    .form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form .wide { grid-column: 1 / -1; }
+    .form label { margin-bottom: 0; }
+    .form input, .form textarea { margin-top: 5px; }
+    .save-row {
+      margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line);
+      display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #587560;
+    }
+    .btn.small { width: auto; padding: 9px 14px; margin: 0; }
+
+    .row {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      padding: 12px 0; border-top: 1px solid #edf0ed; font-size: 13px;
+    }
+    .row:first-child { border-top: 0; }
+    .row .meta { color: var(--muted); font-size: 12px; }
+    .del { border: 0; background: transparent; color: #b44; font-size: 12px; font-weight: 700; }
+
+    .msg { color: var(--brand); font-size: 12px; font-weight: 700; display: none; }
+    .msg.show { display: block; }
+
+    @media (max-width: 800px) {
+      .dash.show { grid-template-columns: 1fr; }
+      .side { display: none; }
+      .form { grid-template-columns: 1fr; }
+      .form .wide { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-wrap" id="login-screen">
+    <div class="login-box">
+      <div class="brand-mark">NM</div>
+      <h1>Panel Admin</h1>
+      <p>Nuovo Market · Demo SmartBarrio</p>
+      <label>Contraseña</label>
+      <input id="login-pass" type="password" value="admin123" />
+      <button class="btn primary" id="login-btn">Ingresar</button>
+      <p class="hint">Demo: usá <strong>admin123</strong></p>
+    </div>
+  </div>
+
+  <div class="dash" id="admin-app">
+    <aside class="side">
+      <div class="brand"><span class="brand-mark">SB</span>SmartBarrio</div>
+      <div class="side-biz">
+        <b id="side-name">Nuovo Market</b>
+        <small>Kiosco</small>
+      </div>
+      <nav>
+        <button class="active" data-tab="brand">▣ Mi negocio</button>
+        <button data-tab="products">□ Productos</button>
+        <button data-tab="orders">✉ Pedidos</button>
+      </nav>
+      <button class="view-public" onclick="window.open('index.html','_blank')">↗ Ver sitio público</button>
+      <button class="view-public" id="logout-btn" style="margin-top:8px">Salir</button>
+    </aside>
+
+    <main class="dmain">
+      <span class="kicker">Panel administrativo</span>
+      <h1 id="section-title">Mi negocio</h1>
+
+      <section class="panel tab" id="tab-brand">
+        <h2>Configuración de marca</h2>
+        <div class="form">
+          <label>Nombre comercial<input id="brand-name" /></label>
+          <label>WhatsApp (solo números)<input id="brand-wa" placeholder="549261..." /></label>
+          <label class="wide">Título del hero<input id="brand-hero-title" /></label>
+          <label class="wide">Descripción<textarea id="brand-hero-desc" rows="2"></textarea></label>
+        </div>
+        <div class="save-row">
+          <span class="msg" id="brand-msg">✓ Guardado</span>
+          <button class="btn primary small" id="save-brand">Guardar cambios</button>
+        </div>
+      </section>
+
+      <section class="panel tab" id="tab-products" style="display:none">
+        <h2>Agregar producto</h2>
+        <div class="form" style="margin-bottom:12px">
+          <input id="prod-name" placeholder="Nombre" />
+          <input id="prod-category" placeholder="Categoría" />
+          <input id="prod-price" type="number" placeholder="Precio" min="0" />
+          <input id="prod-desc" placeholder="Descripción corta" />
+        </div>
+        <button class="btn primary small" id="add-prod">Agregar</button>
+        <div id="products-list" style="margin-top:18px"></div>
+      </section>
+
+      <section class="panel tab" id="tab-orders" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <h2 style="margin:0">Pedidos recibidos</h2>
+          <button class="del" id="clear-orders">Limpiar todos</button>
+        </div>
+        <div id="orders-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const STORAGE_KEY = 'nuovo_market_data_v1';
+      const PASS = 'admin123';
+      const SESSION = 'nuovo_market_admin_session';
+      const DEFAULT = {
+        brand: {
+          name: 'Nuovo Market',
+          whatsapp: '5492615551040',
+          heroTitle: 'Todo lo que necesitás, cerca y rápido',
+          heroDesc: 'Bebidas, snacks, cigarrillos, golosinas y más. Pedí por WhatsApp y retirás o coordinamos entrega en el barrio.'
+        },
+        products: [
+          { id: 'p1', name: 'Coca-Cola 2.25L', category: 'Bebidas', price: 2800, description: 'Gaseosa clásica familiar' },
+          { id: 'p2', name: 'Agua Villavicencio 2L', category: 'Bebidas', price: 1500, description: 'Agua mineral sin gas' },
+          { id: 'p3', name: 'Cerveza Quilmes 1L', category: 'Bebidas', price: 2200, description: 'Cerveza rubia' },
+          { id: 'p4', name: 'Papas Lays Clásicas', category: 'Snacks', price: 1800, description: 'Bolsa mediana' },
+          { id: 'p5', name: 'Alfajor Havanna', category: 'Golosinas', price: 1200, description: 'Doble dulce de leche' },
+          { id: 'p6', name: 'Cigarrillos Marlboro', category: 'Cigarrillos', price: 3500, description: 'Box 20 unidades' },
+          { id: 'p7', name: 'Yogur La Serenísima', category: 'Lácteos', price: 1100, description: 'Natural o frutado' },
+          { id: 'p8', name: 'Galletitas Oreo', category: 'Golosinas', price: 1600, description: 'Paquete clásico' },
+          { id: 'p9', name: 'Energizante Red Bull', category: 'Bebidas', price: 2500, description: 'Lata 250ml' }
+        ],
+        orders: []
+      };
+
+      function load() {
+        try {
+          const r = localStorage.getItem(STORAGE_KEY);
+          if (!r) { const d = structuredClone(DEFAULT); localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); return d; }
+          return JSON.parse(r);
+        } catch { return structuredClone(DEFAULT); }
+      }
+      function save(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
+
+      let data = load();
+
+      function money(n) {
+        return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(n);
+      }
+      function date(iso) {
+        try { return new Date(iso).toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' }); }
+        catch { return iso; }
+      }
+
+      function showApp() {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('admin-app').classList.add('show');
+        loadBrand();
+        renderProducts();
+        renderOrders();
+      }
+
+      if (sessionStorage.getItem(SESSION) === '1') showApp();
+
+      document.getElementById('login-btn').onclick = () => {
+        if (document.getElementById('login-pass').value === PASS) {
+          sessionStorage.setItem(SESSION, '1');
+          showApp();
+        } else alert('Contraseña incorrecta');
+      };
+
+      document.getElementById('logout-btn').onclick = () => {
+        sessionStorage.removeItem(SESSION);
+        location.reload();
+      };
+
+      document.querySelectorAll('.side nav button').forEach(btn => {
+        btn.onclick = () => {
+          document.querySelectorAll('.side nav button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.querySelectorAll('.tab').forEach(t => t.style.display = 'none');
+          document.getElementById('tab-' + btn.dataset.tab).style.display = 'block';
+          document.getElementById('section-title').textContent =
+            btn.dataset.tab === 'brand' ? 'Mi negocio' : btn.dataset.tab === 'products' ? 'Productos' : 'Pedidos';
+        };
+      });
+
+      function loadBrand() {
+        const b = data.brand;
+        document.getElementById('brand-name').value = b.name || '';
+        document.getElementById('brand-wa').value = b.whatsapp || '';
+        document.getElementById('brand-hero-title').value = b.heroTitle || '';
+        document.getElementById('brand-hero-desc').value = b.heroDesc || '';
+        document.getElementById('side-name').textContent = b.name || 'Nuovo Market';
+      }
+
+      document.getElementById('save-brand').onclick = () => {
+        data.brand.name = document.getElementById('brand-name').value.trim() || 'Nuovo Market';
+        data.brand.whatsapp = document.getElementById('brand-wa').value.replace(/\D/g, '') || '5492615551040';
+        data.brand.heroTitle = document.getElementById('brand-hero-title').value.trim();
+        data.brand.heroDesc = document.getElementById('brand-hero-desc').value.trim();
+        save(data);
+        document.getElementById('side-name').textContent = data.brand.name;
+        const m = document.getElementById('brand-msg');
+        m.classList.add('show');
+        setTimeout(() => m.classList.remove('show'), 3000);
+      };
+
+      function renderProducts() {
+        const list = document.getElementById('products-list');
+        if (!data.products.length) {
+          list.innerHTML = '<p style="font-size:13px;color:#7b857e">No hay productos.</p>';
+          return;
+        }
+        list.innerHTML = data.products.map(p => `
+          <div class="row">
+            <div><b>${p.name}</b><div class="meta">${p.category || '—'} · ${money(p.price)}</div></div>
+            <button class="del" data-id="${p.id}">Eliminar</button>
+          </div>`).join('');
+        list.querySelectorAll('.del').forEach(btn => {
+          btn.onclick = () => {
+            if (!confirm('¿Eliminar?')) return;
+            data.products = data.products.filter(p => p.id !== btn.dataset.id);
+            save(data);
+            renderProducts();
+          };
+        });
+      }
+
+      document.getElementById('add-prod').onclick = () => {
+        const name = document.getElementById('prod-name').value.trim();
+        if (!name) return alert('Nombre obligatorio');
+        data.products.push({
+          id: 'p' + Date.now(),
+          name,
+          category: document.getElementById('prod-category').value.trim() || 'General',
+          price: parseInt(document.getElementById('prod-price').value, 10) || 0,
+          description: document.getElementById('prod-desc').value.trim()
+        });
+        save(data);
+        renderProducts();
+        ['prod-name','prod-category','prod-price','prod-desc'].forEach(id => document.getElementById(id).value = '');
+      };
+
+      function renderOrders() {
+        const list = document.getElementById('orders-list');
+        if (!data.orders.length) {
+          list.innerHTML = '<p style="font-size:13px;color:#7b857e">Todavía no hay pedidos. Probá desde el sitio público.</p>';
+          return;
+        }
+        list.innerHTML = data.orders.map(o => `
+          <div class="row">
+            <div>
+              <b>${o.productName} × ${o.quantity}</b>
+              <div class="meta">${o.customerName} · ${o.customerPhone}${o.note ? ' · ' + o.note : ''}</div>
+            </div>
+            <div style="text-align:right">
+              <b>${money(o.total)}</b>
+              <div class="meta">${date(o.createdAt)}</div>
+            </div>
+          </div>`).join('');
+      }
+
+      document.getElementById('clear-orders').onclick = () => {
+        if (!confirm('¿Borrar todos los pedidos?')) return;
+        data.orders = [];
+        save(data);
+        renderOrders();
+      };
+
+      window.addEventListener('storage', e => {
+        if (e.key === STORAGE_KEY) {
+          data = load();
+          loadBrand();
+          renderProducts();
+          renderOrders();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
