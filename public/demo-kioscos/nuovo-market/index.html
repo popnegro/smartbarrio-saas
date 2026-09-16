@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nuovo Market · Kiosco</title>
+  <meta name="description" content="Nuovo Market — Kiosco de barrio. Catálogo y pedidos por WhatsApp." />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#172019; --muted:#69746c; --line:#e6ebe6; --paper:#f7f8f5; --card:#fff; --brand:#164a36; --accent:#d7ef47; --soft:#edf4e8; --orange:#ef9b45; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: "DM Sans", sans-serif; }
+    a, button { cursor: pointer; font: inherit; }
+    a { text-decoration: none; color: inherit; }
+    .demo-bar { background: #172019; color: #fff; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 11px 28px; font-size: 12px; }
+    .demo-bar strong { font-family: Manrope, sans-serif; font-size: 13px; margin-right: 10px; }
+    .demo-bar span { color: #aeb8b0; }
+    .demo-bar a { color: #d7ef47; font-weight: 700; }
+    .public-nav { height: 72px; background: #fff; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; padding: 0 max(24px, calc((100vw - 1180px) / 2)); }
+    .brand { display: flex; align-items: center; gap: 9px; font-family: Manrope, sans-serif; font-weight: 800; letter-spacing: -.03em; }
+    .brand-mark { width: 31px; height: 31px; border-radius: 9px; background: var(--brand); color: var(--accent); display: grid; place-items: center; font-size: 11px; font-weight: 800; }
+    .public-nav-right { display: flex; align-items: center; gap: 13px; }
+    .demo-pill { font-size: 11px; background: #f0f3ee; color: #526057; padding: 6px 10px; border-radius: 99px; }
+    .admin-link { border: 0; background: transparent; color: #526057; font-weight: 600; font-size: 13px; }
+    .btn { border-radius: 10px; padding: 11px 15px; border: 1px solid var(--line); font-weight: 750; font-size: 13px; display: inline-flex; align-items: center; gap: 7px; }
+    .btn.primary { background: var(--brand); color: #fff; border-color: var(--brand); }
+    .btn.secondary { background: #fff; color: var(--ink); }
+    .public-main { max-width: 1180px; margin: auto; padding: 34px 24px 70px; }
+    .hero-card { display: grid; grid-template-columns: 1.08fr .92fr; background: #fff; border: 1px solid var(--line); border-radius: 24px; overflow: hidden; min-height: 380px; }
+    .hero-copy { padding: 50px 50px 44px; }
+    .eyebrow { font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: 800; color: #728077; display: flex; align-items: center; gap: 8px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
+    .hero-copy h1 { font-family: Manrope, sans-serif; font-size: 42px; line-height: 1.05; letter-spacing: -.05em; margin: 16px 0 14px; }
+    .hero-copy p { font-size: 17px; line-height: 1.55; color: var(--muted); max-width: 480px; margin: 0; }
+    .hero-actions { display: flex; gap: 9px; margin: 26px 0 16px; flex-wrap: wrap; }
+    .trust-row { display: flex; gap: 16px; font-size: 12px; color: #6d786f; flex-wrap: wrap; }
+    .hero-visual { margin: 15px; border-radius: 17px; min-height: 300px; background: linear-gradient(145deg, #ef9b45, #b86e28); color: #fff; display: grid; place-items: center; position: relative; }
+    .visual-badge { position: absolute; top: 17px; left: 17px; background: #fffffff0; color: #27332c; border-radius: 8px; padding: 7px 9px; font-size: 10px; font-weight: 800; }
+    .visual-initials { font-size: 88px; font-weight: 900; letter-spacing: -.1em; font-family: Manrope, sans-serif; }
+    .visual-caption { position: absolute; left: 17px; right: 17px; bottom: 17px; background: #17201999; padding: 10px; border-radius: 9px; font-size: 11px; }
+    .info-strip { margin: 17px 0 36px; background: #fff; border: 1px solid var(--line); border-radius: 16px; display: grid; grid-template-columns: 1fr 1fr 1fr auto; overflow: hidden; }
+    .info-strip > div { padding: 16px 18px; border-right: 1px solid var(--line); font-size: 12px; }
+    .info-strip strong { margin-right: 7px; }
+    .info-strip span { color: #738078; }
+    .route { padding: 16px 18px; font-weight: 800; font-size: 12px; white-space: nowrap; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 17px; }
+    .kicker { font-size: 11px; letter-spacing: .13em; text-transform: uppercase; font-weight: 800; color: #728077; }
+    .section-head h2 { font-family: Manrope, sans-serif; letter-spacing: -.04em; margin: 5px 0 0; font-size: 29px; }
+    .section-note { font-size: 12px; color: #79837c; }
+    .catalog-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    .catalog-card { background: #fff; border: 1px solid var(--line); border-radius: 15px; padding: 12px; display: grid; grid-template-columns: 72px 1fr; gap: 12px; }
+    .catalog-img { height: 72px; border-radius: 10px; background: var(--orange); color: #fff; display: grid; place-items: start; padding: 8px; font-size: 10px; font-weight: 800; }
+    .catalog-card h3 { margin: 2px 0 4px; font-family: Manrope, sans-serif; font-size: 14px; }
+    .catalog-card p { font-size: 11px; color: #7a847c; margin: 0 0 8px; line-height: 1.4; }
+    .catalog-card .price { font-family: Manrope, sans-serif; font-weight: 800; font-size: 15px; }
+    .catalog-card .ask { margin-top: 8px; width: 100%; border: 0; background: #eef3ee; color: #244936; border-radius: 8px; padding: 8px; font-size: 11px; font-weight: 800; }
+    .contact-panel { margin-top: 48px; background: #eaf0e9; border-radius: 18px; padding: 27px 30px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .contact-panel h2 { font-family: Manrope, sans-serif; font-size: 24px; margin: 5px 0; letter-spacing: -.04em; }
+    .contact-panel p { font-size: 13px; color: #6c776f; margin: 0; }
+    footer { margin-top: 48px; border-top: 1px solid var(--line); padding-top: 18px; display: flex; justify-content: space-between; font-size: 11px; color: #7b857e; }
+    .modal { position: fixed; inset: 0; background: #10201677; display: none; place-items: center; padding: 20px; z-index: 50; }
+    .modal.open { display: grid; }
+    .box { background: #fff; border-radius: 17px; padding: 23px; width: min(460px, 100%); }
+    .box h2 { font-family: Manrope, sans-serif; margin: 4px 0 14px; font-size: 20px; }
+    .box label { display: block; font-size: 11px; font-weight: 800; margin: 10px 0 4px; }
+    .box input, .box textarea { display: block; width: 100%; padding: 10px; border: 1px solid #dde4dd; border-radius: 8px; }
+    .close { float: right; border: 0; background: transparent; font-size: 20px; }
+    .toast { position: fixed; bottom: 24px; right: 24px; background: #172019; color: #fff; padding: 12px 16px; border-radius: 10px; font-size: 13px; display: none; z-index: 60; }
+    .toast.show { display: block; }
+    @media (max-width: 900px) { .hero-card { grid-template-columns: 1fr; } .hero-copy { padding: 32px 26px; } .hero-copy h1 { font-size: 32px; } .info-strip { grid-template-columns: 1fr 1fr; } .catalog-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="demo-bar">
+    <div><strong>SmartBarrio PMV</strong><span>Demo Kiosco · QA</span></div>
+    <a href="../index.html">← Volver al home comercial</a>
+  </div>
+  <header class="public-nav">
+    <div class="brand"><span class="brand-mark" id="logo-badge">NM</span><span id="brand-name">Nuovo Market</span></div>
+    <div class="public-nav-right">
+      <span class="demo-pill">Sitio demo</span>
+      <a class="admin-link" href="admin.html">⚙ Administrar</a>
+    </div>
+  </header>
+  <main class="public-main">
+    <section class="hero-card">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="dot"></span>Kiosco · Mendoza</div>
+        <h1 id="hero-title">Todo lo que necesitás, cerca y rápido</h1>
+        <p id="hero-desc">Bebidas, snacks, cigarrillos, golosinas y más. Pedí por WhatsApp y retirás o coordinamos entrega en el barrio.</p>
+        <div class="hero-actions">
+          <a class="btn primary" id="wa-hero" href="#" target="_blank">WhatsApp</a>
+          <a class="btn secondary" href="#catalogo">Ver catálogo</a>
+        </div>
+        <div class="trust-row"><span>✓ Negocio verificado</span><span>◷ 08:00–23:30</span></div>
+      </div>
+      <div class="hero-visual">
+        <span class="visual-badge">Kiosco</span>
+        <span class="visual-initials" id="visual-initials">NM</span>
+        <span class="visual-caption">⌖ Av. ejemplo 742, Mendoza</span>
+      </div>
+    </section>
+    <section class="info-strip">
+      <div><strong>⌖ Ubicación</strong><span>Av. ejemplo 742, Mendoza</span></div>
+      <div><strong>◷ Horarios</strong><span>08:00–23:30</span></div>
+      <div><strong>☎ Contacto</strong><span>261 555 1040</span></div>
+      <a class="route" href="#contacto">↗ Cómo llegar</a>
+    </section>
+    <div class="section-head" id="catalogo">
+      <div><span class="kicker">Lo que encontrás</span><h2>Productos disponibles</h2></div>
+      <span class="section-note">Tocá pedir y se abre WhatsApp</span>
+    </div>
+    <div class="catalog-grid" id="products-grid"></div>
+    <section class="contact-panel" id="contacto">
+      <div>
+        <span class="kicker">¿Tenés una consulta?</span>
+        <h2>Hablemos por WhatsApp</h2>
+        <p>Preguntanos por productos, disponibilidad o cómo llegar.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn primary" id="wa-contact" href="#" target="_blank">WhatsApp</a>
+        <a class="btn secondary" href="tel:2615551040">Llamar</a>
+      </div>
+    </section>
+    <footer>
+      <div class="brand"><span class="brand-mark">NM</span><span id="footer-name">Nuovo Market</span></div>
+      <span>© 2026 · Presencia digital con SmartBarrio</span>
+    </footer>
+  </main>
+  <div class="modal" id="modal">
+    <div class="box">
+      <button class="close" id="close-modal">×</button>
+      <span class="kicker">Nuevo pedido</span>
+      <h2 id="modal-title">Pedir producto</h2>
+      <p id="modal-price" style="font-weight:800;margin:0 0 12px"></p>
+      <label>Cantidad<input id="order-qty" type="number" min="1" value="1"></label>
+      <label>Nombre<input id="order-name" placeholder="Tu nombre"></label>
+      <label>WhatsApp<input id="order-phone" placeholder="261..."></label>
+      <label>Nota<textarea id="order-note" placeholder="Opcional"></textarea></label>
+      <button class="btn primary" style="width:100%;margin-top:14px" id="confirm-order">Registrar y abrir WhatsApp</button>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+  (function(){
+    const STORAGE_KEY='nuovo_market_data_v1';
+    const DEFAULT={brand:{name:'Nuovo Market',whatsapp:'5492615551040',heroTitle:'Todo lo que necesitás, cerca y rápido',heroDesc:'Bebidas, snacks, cigarrillos, golosinas y más. Pedí por WhatsApp y retirás o coordinamos entrega en el barrio.'},products:[{id:'p1',name:'Coca-Cola 2.25L',category:'Bebidas',price:2800,description:'Gaseosa clásica familiar'},{id:'p2',name:'Agua Villavicencio 2L',category:'Bebidas',price:1500,description:'Agua mineral sin gas'},{id:'p3',name:'Cerveza Quilmes 1L',category:'Bebidas',price:2200,description:'Cerveza rubia'},{id:'p4',name:'Papas Lays Clásicas',category:'Snacks',price:1800,description:'Bolsa mediana'},{id:'p5',name:'Alfajor Havanna',category:'Golosinas',price:1200,description:'Doble dulce de leche'},{id:'p6',name:'Cigarrillos Marlboro',category:'Cigarrillos',price:3500,description:'Box 20 unidades'},{id:'p7',name:'Yogur La Serenísima',category:'Lácteos',price:1100,description:'Natural o frutado'},{id:'p8',name:'Galletitas Oreo',category:'Golosinas',price:1600,description:'Paquete clásico'},{id:'p9',name:'Energizante Red Bull',category:'Bebidas',price:2500,description:'Lata 250ml'}],orders:[]};
+    function load(){try{const r=localStorage.getItem(STORAGE_KEY);return r?JSON.parse(r):structuredClone(DEFAULT)}catch{return structuredClone(DEFAULT)}}
+    function save(d){localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}
+    let data=load(), current=null;
+    function money(n){return new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS',maximumFractionDigits:0}).format(n)}
+    function applyBrand(){const b=data.brand;document.getElementById('brand-name').textContent=b.name;document.getElementById('footer-name').textContent=b.name;document.getElementById('hero-title').textContent=b.heroTitle;document.getElementById('hero-desc').textContent=b.heroDesc;const ini=b.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();document.getElementById('logo-badge').textContent=ini;document.getElementById('visual-initials').textContent=ini;const wa='https://wa.me/'+b.whatsapp.replace(/\D/g,'');document.getElementById('wa-hero').href=wa;document.getElementById('wa-contact').href=wa}
+    function renderProducts(){const grid=document.getElementById('products-grid');grid.innerHTML='';data.products.forEach((p,i)=>{const el=document.createElement('article');el.className='catalog-card';el.innerHTML='<div class="catalog-img"><span>'+String(i+1).padStart(2,'0')+'</span></div><div><h3>'+p.name+'</h3><p>'+(p.description||p.category||'')+'</p><div class="price">'+money(p.price)+'</div><button class="ask" data-id="'+p.id+'">Pedir ↗</button></div>';grid.appendChild(el)});grid.querySelectorAll('.ask').forEach(btn=>{btn.onclick=()=>openModal(btn.dataset.id)})}
+    function openModal(id){current=data.products.find(p=>p.id===id);if(!current)return;document.getElementById('modal-title').textContent=current.name;document.getElementById('modal-price').textContent=money(current.price);document.getElementById('order-qty').value=1;document.getElementById('order-name').value='';document.getElementById('order-phone').value='';document.getElementById('order-note').value='';document.getElementById('modal').classList.add('open')}
+    function closeModal(){document.getElementById('modal').classList.remove('open');current=null}
+    function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
+    function confirmOrder(){if(!current)return;const qty=parseInt(document.getElementById('order-qty').value,10)||1;const name=document.getElementById('order-name').value.trim();const phone=document.getElementById('order-phone').value.trim();const note=document.getElementById('order-note').value.trim();if(!name||name.length<2)return toast('Ingresá tu nombre');if(!phone||phone.replace(/\D/g,'').length<8)return toast('WhatsApp inválido');const total=current.price*qty;data.orders.unshift({id:'ord_'+Date.now(),productName:current.name,quantity:qty,total,customerName:name,customerPhone:phone,note,createdAt:new Date().toISOString()});save(data);const msg=encodeURIComponent('¡Hola! Quiero pedir desde '+data.brand.name+':%0A%0A*Producto:* '+current.name+'%0A*Cantidad:* '+qty+'%0A*Total:* '+money(total)+'%0A*Nombre:* '+name+(note?'%0A*Nota:* '+note:'')+'%0A%0AGracias!');window.open('https://wa.me/'+data.brand.whatsapp.replace(/\D/g,'')+'?text='+msg,'_blank');closeModal();toast('Pedido registrado. Se abrió WhatsApp.')}
+    document.getElementById('close-modal').onclick=closeModal;
+    document.getElementById('modal').onclick=e=>{if(e.target.id==='modal')closeModal()};
+    document.getElementById('confirm-order').onclick=confirmOrder;
+    applyBrand();renderProducts();
+    window.addEventListener('storage',e=>{if(e.key===STORAGE_KEY){data=load();applyBrand();renderProducts()}});
+  })();
+  </script>
+</body>
+</html>
