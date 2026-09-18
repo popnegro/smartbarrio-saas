@@ -31,8 +31,20 @@
       "destination": "/demo-kioscos/index.html"
     },
     {
+      "source": "/kioscos/index.html",
+      "destination": "/demo-kioscos/index.html"
+    },
+    {
       "source": "/kioscos/nuovo-market",
       "destination": "/demo-kioscos/nuovo-market/index.html"
+    },
+    {
+      "source": "/kioscos/nuovo-market/index.html",
+      "destination": "/demo-kioscos/nuovo-market/index.html"
+    },
+    {
+      "source": "/kioscos/nuovo-market/admin.html",
+      "destination": "/demo-kioscos/nuovo-market/admin.html"
     },
     {
       "source": "/kioscos/nuovo-market/",
