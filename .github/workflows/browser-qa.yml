@@ -1,0 +1,101 @@
+name: Browser QA
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-functional-accessibility:
+    name: Browser + Functional + Accessibility QA
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright
+        run: npm install --no-save @playwright/test
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Build
+        run: npm run build
+      - name: Start application
+        run: npm run start -- --hostname 0.0.0.0 > /tmp/smartbarrio-next.log 2>&1 &
+      - name: Wait for application
+        run: |
+          for i in {1..60}; do
+            if curl -fsS http://127.0.0.1:3000/index.html >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          cat /tmp/smartbarrio-next.log
+          exit 1
+      - name: Run Browser Functional Accessibility QA
+        run: npx playwright test tests/qa/browser-functional-accessibility.spec.js
+        env:
+          PLAYWRIGHT_BASE_URL: http://127.0.0.1:3000
+      - name: Upload QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smartbarrio-browser-qa
+          path: |
+            playwright-report
+            test-results
+            /tmp/smartbarrio-next.log
+          if-no-files-found: ignore
+
+  visual-regression:
+    name: Visual Regression · HUMAN GATE
+    runs-on: ubuntu-latest
+    needs: browser-functional-accessibility
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright
+        run: npm install --no-save @playwright/test
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Build
+        run: npm run build
+      - name: Start application
+        run: npm run start -- --hostname 0.0.0.0 > /tmp/smartbarrio-next.log 2>&1 &
+      - name: Wait for application
+        run: |
+          for i in {1..60}; do
+            if curl -fsS http://127.0.0.1:3000/index.html >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          cat /tmp/smartbarrio-next.log
+          exit 1
+      - name: Compare UI with production
+        run: npx playwright test tests/qa/visual-regression.spec.js
+        env:
+          PLAYWRIGHT_BASE_URL: http://127.0.0.1:3000
+          VISUAL_BASELINE_URL: https://smartbarrio.vercel.app
+      - name: Upload visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smartbarrio-visual-regression
+          path: |
+            test-results
+            playwright-report
+            /tmp/smartbarrio-next.log
+          if-no-files-found: ignore
