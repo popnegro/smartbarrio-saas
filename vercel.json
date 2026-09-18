@@ -53,6 +53,10 @@
     {
       "source": "/admin/",
       "destination": "/demo-kioscos/nuovo-market/admin.html"
+    },
+    {
+      "source": "/admin/index.html",
+      "destination": "/demo-kioscos/nuovo-market/admin.html"
     }
   ]
 }
