@@ -1,0 +1,46 @@
+{
+  "redirects": [
+    {
+      "source": "/demo-kioscos/",
+      "destination": "/kioscos/",
+      "permanent": true
+    },
+    {
+      "source": "/demo-kioscos/nuovo-market",
+      "destination": "/kioscos/nuovo-market",
+      "permanent": true
+    },
+    {
+      "source": "/demo-kioscos/nuovo-market/",
+      "destination": "/kioscos/nuovo-market",
+      "permanent": true
+    },
+    {
+      "source": "/demo-kioscos/nuovo-market/admin.html",
+      "destination": "/admin/",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/index.html",
+      "destination": "/"
+    },
+    {
+      "source": "/kioscos/",
+      "destination": "/demo-kioscos/index.html"
+    },
+    {
+      "source": "/kioscos/nuovo-market",
+      "destination": "/demo-kioscos/nuovo-market/index.html"
+    },
+    {
+      "source": "/kioscos/nuovo-market/",
+      "destination": "/demo-kioscos/nuovo-market/index.html"
+    },
+    {
+      "source": "/admin/",
+      "destination": "/demo-kioscos/nuovo-market/admin.html"
+    }
+  ]
+}
