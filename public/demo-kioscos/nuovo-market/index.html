@@ -130,14 +130,14 @@
   </main>
   <div class="modal" id="modal">
     <div class="box">
-      <button class="close" id="close-modal">×</button>
+      <button class="close" id="close-modal" aria-label="Cerrar pedido">×</button>
       <span class="kicker">Nuevo pedido</span>
       <h2 id="modal-title">Pedir producto</h2>
       <p id="modal-price" style="font-weight:800;margin:0 0 12px"></p>
-      <label>Cantidad<input id="order-qty" type="number" min="1" value="1"></label>
-      <label>Nombre<input id="order-name" placeholder="Tu nombre"></label>
-      <label>WhatsApp<input id="order-phone" placeholder="261..."></label>
-      <label>Nota<textarea id="order-note" placeholder="Opcional"></textarea></label>
+      <label for="order-qty">Cantidad</label><input id="order-qty" type="number" min="1" value="1">
+      <label for="order-name">Nombre</label><input id="order-name" placeholder="Tu nombre">
+      <label for="order-phone">WhatsApp</label><input id="order-phone" placeholder="261...">
+      <label for="order-note">Nota</label><textarea id="order-note" placeholder="Opcional"></textarea>
       <button class="btn primary" style="width:100%;margin-top:14px" id="confirm-order">Registrar y abrir WhatsApp</button>
     </div>
   </div>
