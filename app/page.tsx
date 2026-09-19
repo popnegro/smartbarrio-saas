@@ -1,5 +1,7 @@
 'use client';
 import {useMemo,useState} from 'react';
+import Link from 'next/link';
+import {usePathname,useRouter} from 'next/navigation';
 import {MapPin,Phone,MessageCircle,Clock3,ChevronRight,ArrowUpRight,Store,Settings2,Package,BriefcaseBusiness,Image as ImageIcon,Tag,Inbox,BarChart3,Search,Plus,CheckCircle2,Navigation,Menu,X,ExternalLink,ShoppingBasket,Carrot,Beef,Scissors,PawPrint,Heart} from 'lucide-react';
 
 type CategoryKey='kiosco'|'minimercado'|'verduleria'|'carniceria'|'peluqueria'|'ferreteria'|'petshop'|'sexshop';
@@ -40,4 +42,109 @@ function PublicSite({demo,onDashboard,onCategory}:{demo:Demo;onDashboard:()=>voi
 
 function Dashboard({demo,onPublic,onCategory}:{demo:Demo;onPublic:()=>void;onCategory:(k:CategoryKey)=>void}){const [section,setSection]=useState('Inicio');const nav=[['Inicio',BarChart3],['Mi negocio',Store],['Productos',Package],['Servicios',BriefcaseBusiness],['Promociones',Tag],['Fotos',ImageIcon],['Horarios',Clock3],['WhatsApp',MessageCircle],['Consultas',Inbox]] as const; const modules=nav; const leads=[['María Gómez','Quiero saber si tienen pastillas para Corolla','Producto','Nuevo'],['Carlos Pérez','¿Cuánto cuesta el service?','Servicio','Contactado'],['Lucía Sosa','Consulta por Toyota Corolla 2021','Vehículo','Interesado']]; return <div className="dash"><aside><div className="dash-brand"><span className="brand-mark">SB</span><div><strong>SmartBarrio</strong><small>Panel del comercio</small></div></div><div className="side-business"><div className="avatar">{demo.name.split(' ').map(x=>x[0]).slice(0,2).join('')}</div><div><strong>{demo.name}</strong><span>{demo.category}</span></div></div><nav>{modules.map(([n,I])=><button className={section===n?'active':''} onClick={()=>setSection(n)} key={n}><I size={17}/>{n}</button>)}</nav><button className="view-public" onClick={onPublic}><ExternalLink size={16}/> Ver sitio público</button></aside><main className="dash-main"><header className="dash-top"><div><span className="kicker">PANEL ADMINISTRATIVO</span><h1>{section}</h1></div><div className="dash-top-actions"><button className="category-switch"><span className={'dot '+demo.accent}></span>{demo.category}</button><button className="btn secondary small" onClick={onPublic}>Ver sitio</button></div></header>{section==='Inicio'?<><div className="metric-grid">{[['Visitas','1.284','+18%'],['Consultas','37','+12%'],['WhatsApp','84','+24%'],['Cómo llegar','51','+9%']].map(m=><div className="metric" key={m[0]}><span>{m[0]}</span><strong>{m[1]}</strong><small>{m[2]} vs. período anterior</small></div>)}</div><div className="dash-grid"><section className="panel"><div className="panel-title"><div><span className="kicker">ÚLTIMOS 30 DÍAS</span><h2>Actividad</h2></div><span className="select">Últimos 30 días ▾</span></div><div className="chart"><div className="chart-bars">{[38,52,45,65,54,72,61,84,68,78,91,76,88,94,82,96,72,86,90,78,95,88,100,92,96,86,94,100,90,97].map((h,i)=><i style={{height:`${h}%`}} key={i}></i>)}</div><div className="chart-axis"><span>Hace 30 días</span><span>Hoy</span></div></div></section><section className="panel"><div className="panel-title"><div><span className="kicker">CAPTACIÓN</span><h2>Acciones</h2></div></div><div className="action-stat"><span><MessageCircle size={17}/> WhatsApp</span><strong>84</strong><div className="progress"><i style={{width:'82%'}}/></div></div><div className="action-stat"><span><Phone size={17}/> Llamadas</span><strong>46</strong><div className="progress"><i style={{width:'58%'}}/></div></div><div className="action-stat"><span><Navigation size={17}/> Cómo llegar</span><strong>51</strong><div className="progress"><i style={{width:'64%'}}/></div></div></section></div><section className="panel product-panel"><div className="panel-title"><div><span className="kicker">CATÁLOGO</span><h2>Productos destacados</h2></div><button className="text-btn" onClick={()=>setSection('Productos')}>Gestionar <ChevronRight size={15}/></button></div><div className="catalog-grid" style={{gridTemplateColumns:"1fr"}}>{demo.products.slice(0,4).map((p,i)=><div className="catalog-card" key={p}><div className={'catalog-img '+demo.accent} style={demo.productImages?.[i]?{backgroundImage:`url(${demo.productImages[i]})`,backgroundSize:'cover',backgroundPosition:'center'}:undefined}><span>{String(i+1).padStart(2,'0')}</span></div><div><strong>{p}</strong><small>{demo.key==='kiosco'?'Disponible en catálogo demo':'Producto del comercio'}</small></div></div>)}</div></section><section className="panel leads-panel"><div className="panel-title"><div><span className="kicker">LEADS</span><h2>Consultas recientes</h2></div><button className="text-btn" onClick={()=>setSection('Consultas')}>Ver todas <ChevronRight size={15}/></button></div><div className="lead-table">{leads.map((l,i)=><div className="lead-row" key={i}><div className="lead-avatar">{l[0][0]}</div><div className="lead-info"><strong>{l[0]}</strong><span>{l[1]}</span></div><span className="lead-type">{l[2]}</span><span className={'status '+l[3].toLowerCase()}>{l[3]}</span><button className="wa-mini"><MessageCircle size={15}/> WhatsApp</button></div>)}</div></section></>:<section className="panel editor"><div className="panel-title"><div><span className="kicker">CONFIGURACIÓN</span><h2>{section}</h2></div><button className="btn primary small"><Plus size={16}/> Agregar</button></div><div className="form-grid"><label>Nombre comercial<input defaultValue={demo.name}/></label><label>Categoría<select defaultValue={demo.key}>{cats.map(c=><option key={c[0]} value={c[0]}>{c[1]}</option>)}</select></label><label>Teléfono<input defaultValue={demo.phone}/></label><label>WhatsApp<input defaultValue={demo.wa}/></label><label className="wide">Dirección<input defaultValue={demo.address}/></label><label className="wide">Descripción<textarea defaultValue={demo.description}/></label></div><div className="save-row"><span><CheckCircle2 size={16}/> Guardado en modo demo</span><button className="btn primary">Guardar cambios</button></div></section>}</main></div>}
 
-export default function App(){const [key,setKey]=useState<CategoryKey>('kiosco');const [mode,setMode]=useState<'public'|'dashboard'>('public');const demo=useMemo(()=>demos.find(d=>d.key===key)!,[key]);return <>{mode==='public'?<><div className="demo-bar"><div><strong>SmartBarrio PMV</strong><span>Demo interactiva · arquitectura configurable por categoría</span></div><div className="demo-selector"><span>Explorar comercio:</span>{cats.map(([k,n])=><button className={k===key?'selected':''} onClick={()=>setKey(k)} key={k}>{n}</button>)}</div></div><PublicSite demo={demo} onDashboard={()=>setMode('dashboard')} onCategory={setKey}/></>:<Dashboard demo={demo} onPublic={()=>setMode('public')} onCategory={setKey}/>}</>}
+function routeForCategory(k:CategoryKey){return '/'+({kiosco:'kioscos',minimercado:'minimercados',verduleria:'verdulerias',carniceria:'carnicerias',peluqueria:'peluquerias-barberias',ferreteria:'ferreterias',petshop:'petshops',sexshop:'sexshops'} as Record<CategoryKey,string>)[k]}
+
+function CommercialHome(){
+  return <div className="commercial-page">
+    <header className="commercial-nav">
+      <Link href="/" className="brand"><span className="brand-mark">SB</span><span>SmartBarrio</span></Link>
+      <nav aria-label="Navegación principal">
+        <a href="#beneficios">Beneficios</a>
+        <a href="#categorias">Categorías de negocios</a>
+        <a href="#inversion">Inversión</a>
+        <a href="#preguntas">Preguntas frecuentes</a>
+        <a href="#registro">Registrá tu negocio</a>
+      </nav>
+      <Link href="/admin" className="btn secondary small">Login</Link>
+    </header>
+    <main>
+      <section className="commercial-hero">
+        <div>
+          <span className="kicker">SMARTBARRIO · LAS HERAS + MAIPÚ</span>
+          <h1>Comercios y servicios de tu barrio.</h1>
+          <p>Descubrí negocios cercanos, consultá productos y servicios y contactá directamente con el comercio.</p>
+          <div className="hero-actions"><a href="#categorias" className="btn primary">Explorar categorías <ArrowUpRight size={17}/></a><a href="#registro" className="btn secondary">Registrá tu negocio</a></div>
+        </div>
+        <div className="commercial-hero-panel">
+          <span className="kicker">DESCUBRÍ CERCA TUYO</span>
+          <strong>Las Heras · Maipú</strong>
+          <p>Un punto de entrada simple para encontrar comercios locales.</p>
+          <div className="commercial-search"><Search size={17}/><span>¿Qué necesitás?</span><span>Buscar</span></div>
+        </div>
+      </section>
+      <section id="beneficios" className="commercial-section">
+        <div className="section-head"><div><span className="kicker">BENEFICIOS</span><h2>Una experiencia directa para vecinos y comercios.</h2></div></div>
+        <div className="benefit-grid">
+          <article><MapPin size={20}/><h3>Comercios cercanos</h3><p>Explorá opciones de Las Heras y Maipú con ubicación y horarios visibles.</p></article>
+          <article><MessageCircle size={20}/><h3>Contacto directo</h3><p>Consultá por WhatsApp o teléfono sin pasos innecesarios.</p></article>
+          <article><Store size={20}/><h3>Presencia para negocios</h3><p>Un catálogo digital simple para mostrar productos, servicios y promociones.</p></article>
+        </div>
+      </section>
+      <section id="categorias" className="commercial-section">
+        <div className="section-head"><div><span className="kicker">CATEGORÍAS</span><h2>Elegí qué estás buscando.</h2></div><span className="section-note">PMV local</span></div>
+        <div className="category-card-grid commercial-category-grid">{cats.map(([k,n])=>{const I=categoryIcons[k];return <Link href={routeForCategory(k)} className="category-card" key={k}><span className={'category-icon '+k}><I size={21}/></span><span className="category-card-copy"><strong>{n}</strong><small>Ver comercios</small></span><ArrowUpRight size={15}/></Link>})}</div>
+      </section>
+      <section id="inversion" className="commercial-section">
+        <div className="section-head"><div><span className="kicker">INVERSIÓN</span><h2>Presencia digital para tu negocio.</h2></div></div>
+        <div className="price-grid"><article><span className="kicker">BÁSICO</span><strong>$150.000</strong><p>Alta y presencia digital del comercio.</p><a href="#registro" className="text-btn">Quiero participar <ChevronRight size={15}/></a></article><article><span className="kicker">MENSUAL</span><strong>$75.000/mes</strong><p>Acompañamiento y potenciación continua de la presencia.</p><a href="#registro" className="text-btn">Consultar <ChevronRight size={15}/></a></article></div>
+      </section>
+      <section id="preguntas" className="commercial-section faq-section">
+        <div><span className="kicker">PREGUNTAS FRECUENTES</span><h2>¿Cómo funciona?</h2><p>SmartBarrio conecta la búsqueda del vecino con la información del comercio y su contacto directo.</p></div>
+        <a className="btn secondary" href="https://socios.pedidosya.com.ar/es#faq" target="_blank" rel="noreferrer">Ver referencia FAQ <ExternalLink size={15}/></a>
+      </section>
+      <section id="registro" className="commercial-register">
+        <div><span className="kicker">REGISTRÁ TU NEGOCIO</span><h2>Sumá tu comercio al PMV.</h2><p>Dejanos tus datos y coordinamos la publicación de tu presencia digital.</p></div>
+        <a className="btn primary" href="mailto:hola@smartbarrio.ar">Quiero registrar mi negocio <ArrowUpRight size={17}/></a>
+      </section>
+    </main>
+    <footer className="commercial-footer"><div className="brand"><span className="brand-mark">SB</span><span>SmartBarrio</span></div><span>© 2026 · Marketplace local</span></footer>
+    <style jsx global>{`
+      .commercial-page{min-height:100vh;background:var(--paper)}
+      .commercial-nav{height:72px;padding:0 max(24px,calc((100vw - 1180px)/2));display:flex;align-items:center;gap:28px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+      .commercial-nav nav{display:flex;gap:20px;align-items:center;flex:1;justify-content:center}
+      .commercial-nav nav a{font-size:12px;font-weight:700;color:#526057}
+      .commercial-nav nav a:hover{color:var(--brand)}
+      .commercial-hero{max-width:1180px;margin:auto;padding:72px 24px 60px;display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center}
+      .commercial-hero h1{font-family:Manrope;font-size:58px;line-height:1.01;letter-spacing:-.06em;max-width:700px;margin:14px 0 20px}
+      .commercial-hero p{font-size:18px;line-height:1.55;color:var(--muted);max-width:640px}
+      .commercial-hero-panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:30px;min-height:250px;display:flex;flex-direction:column;justify-content:center}
+      .commercial-hero-panel strong{font-family:Manrope;font-size:30px;letter-spacing:-.04em;margin-top:8px}
+      .commercial-hero-panel p{font-size:14px;margin:10px 0 20px}
+      .commercial-search{display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:11px;padding:12px;color:#77817a;font-size:12px}.commercial-search span:last-child{margin-left:auto;font-weight:800;color:var(--brand)}
+      .commercial-section{max-width:1180px;margin:auto;padding:42px 24px}.commercial-section>.section-head{margin-bottom:20px}.commercial-section>.section-head h2{max-width:700px}
+      .benefit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.benefit-grid article{background:#fff;border:1px solid var(--line);border-radius:15px;padding:22px}.benefit-grid h3{font-family:Manrope;font-size:17px;margin:18px 0 7px}.benefit-grid p{font-size:12px;color:var(--muted);line-height:1.5;margin:0}.benefit-grid svg{color:#5b7667}
+      .commercial-category-grid{grid-template-columns:repeat(4,1fr)}.commercial-category-grid .category-card{min-height:98px}
+      .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.price-grid article{background:#fff;border:1px solid var(--line);border-radius:15px;padding:24px}.price-grid strong{display:block;font-family:Manrope;font-size:31px;margin:12px 0 8px}.price-grid p{color:var(--muted);font-size:12px;min-height:34px}
+      .faq-section{display:flex;justify-content:space-between;gap:25px;align-items:center;background:#eef3ea;border-radius:18px;margin-top:18px}.faq-section h2{font-family:Manrope;font-size:29px;margin:6px 0}.faq-section p{font-size:13px;color:var(--muted);max-width:650px}
+      .commercial-register{max-width:1180px;margin:24px auto 0;padding:35px 24px;background:var(--brand);color:#fff;border-radius:20px;display:flex;justify-content:space-between;align-items:center;gap:20px}.commercial-register h2{font-family:Manrope;font-size:31px;letter-spacing:-.04em;margin:7px 0}.commercial-register p{color:#d5e0d8;font-size:13px}.commercial-register .btn.primary{background:#d7ef47;color:#172019}
+      .commercial-footer{max-width:1180px;margin:auto;padding:30px 24px 45px;display:flex;justify-content:space-between;color:#77817a;font-size:11px}
+      @media(max-width:900px){.commercial-nav nav{display:none}.commercial-hero{grid-template-columns:1fr;padding-top:45px}.commercial-hero h1{font-size:45px}.commercial-category-grid{grid-template-columns:repeat(2,1fr)}.benefit-grid{grid-template-columns:1fr}.faq-section,.commercial-register{margin-left:15px;margin-right:15px}.price-grid{grid-template-columns:1fr}}
+      @media(max-width:620px){.commercial-nav{padding:0 15px}.commercial-nav .btn{margin-left:auto}.commercial-hero{padding:38px 15px}.commercial-hero h1{font-size:37px}.commercial-section{padding:32px 15px}.commercial-category-grid{grid-template-columns:1fr}.commercial-register{display:block;padding:28px 20px}.commercial-register .btn{margin-top:18px}.commercial-footer{display:grid;gap:12px}}
+    `}</style>
+  </div>
+}
+
+function CategoryLanding({category}:{category:CategoryKey}){
+  const d=demos.find(x=>x.key===category)!;
+  return <div className="site-wrap"><header className="public-nav"><Link href="/" className="brand"><span className="brand-mark">SB</span><span>SmartBarrio</span></Link><div className="public-nav-right"><Link className="btn secondary small" href="/">Inicio</Link></div></header><main className="public-main"><div className="section-head"><div><span className="kicker">CATEGORÍA</span><h2>{d.category}</h2><p className="category-explorer-note">Comercios disponibles en el PMV.</p></div></div><div className="category-card-grid"><Link href={routeForCategory(category)+'/nuovo-market'} className="category-card"><span className={'category-icon '+d.accent}><Store size={21}/></span><span className="category-card-copy"><strong>{d.name}</strong><small>{d.address}</small></span><ArrowUpRight size={15}/></Link></div></main></div>
+}
+
+function NotFoundDemo(){return <div className="site-wrap"><main className="public-main"><section className="hero-card"><div className="hero-copy"><span className="kicker">SMARTBARRIO</span><h1>Página no disponible</h1><p>La ruta solicitada todavía no forma parte del PMV.</p><Link href="/" className="btn primary">Volver al inicio</Link></div></section></main></div>}
+
+export default function App(){
+  const pathname=usePathname();
+  const router=useRouter();
+  const segments=pathname.split('/').filter(Boolean);
+  const categorySlugs={kioscos:'kiosco',minimercados:'minimercado',verdulerias:'verduleria',carnicerias:'carniceria',peluquerias:'peluqueria','peluquerias-barberias':'peluqueria',ferreterias:'ferreteria',petshops:'petshop',sexshops:'sexshop'} as Record<string,CategoryKey>;
+  if(pathname==='/') return <CommercialHome/>;
+  if(pathname==='/admin') {const demo=demos[0];return <Dashboard demo={demo} onPublic={()=>router.push('/kioscos/nuovo-market')} onCategory={(k)=>router.push(routeForCategory(k))}/>;}
+  const category=categorySlugs[segments[0]];
+  if(category && segments.length===1) return <CategoryLanding category={category}/>;
+  if(category && segments.length===2) {
+    const slug=segments[1];
+    const demo=category==='kiosco' && slug==='nuovo-market' ? demos.find(d=>d.key==='kiosco') : demos.find(d=>d.key===category);
+    if(!demo) return <NotFoundDemo/>;
+    return <PublicSite demo={demo} onDashboard={()=>router.push('/admin')} onCategory={(k)=>router.push(routeForCategory(k))}/>;
+  }
+  return <NotFoundDemo/>;
+}
