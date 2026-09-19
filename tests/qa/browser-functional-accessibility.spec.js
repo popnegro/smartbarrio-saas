@@ -36,9 +36,9 @@ test('Functional QA: public product modal and local order', async ({ page }) => 
 
 test('Functional QA: admin commerce navigation', async ({ page }) => {
   await page.goto('/admin/', { waitUntil: 'networkidle' });
-  await expect(page.getByRole('heading', { name: 'Inicio' })).toBeVisible();
+  await expect(page.locator('h1')).toHaveText('Inicio');
   await page.getByRole('button', { name: 'Productos' }).click();
-  await expect(page.getByRole('heading', { name: 'Productos' })).toBeVisible();
+  await expect(page.locator('h1')).toHaveText('Productos');
   const selector = page.locator('.category-switch');
   await expect(selector).toBeVisible();
   await selector.selectOption('mendoza-motor');
