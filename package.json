@@ -2,9 +2,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "qa:browser": "playwright test tests/qa/browser-functional-accessibility.spec.js",
-    "qa:visual": "playwright test tests/qa/visual-regression.spec.js"
+    "start": "next start"
   },
   "dependencies": {
     "next": "15.5.24",
