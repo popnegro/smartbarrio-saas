@@ -1,6 +1,15 @@
 const { test, expect } = require('@playwright/test');
 
-const ROUTES = ['/index.html', '/kioscos/', '/kioscos/nuovo-market', '/admin/'];
+const ROUTES = [
+  '/',
+  '/categoria/kioscos',
+  '/categoria/kioscos?zona=las-heras',
+  '/comercio/kiosco-la-esquina',
+  '/index.html',
+  '/kioscos/',
+  '/kioscos/nuovo-market',
+  '/admin/'
+];
 
 for (const route of ROUTES) {
   test('Browser QA: ' + route, async ({ page }) => {
@@ -15,27 +24,26 @@ for (const route of ROUTES) {
   });
 }
 
-test('Functional QA: public order modal', async ({ page }) => {
-  await page.goto('/kioscos/nuovo-market', { waitUntil: 'networkidle' });
-  await page.locator('.ask').first().click();
-  await expect(page.locator('#modal')).toHaveClass(/open/);
-  await page.locator('#order-name').fill('QA');
-  await page.locator('#order-phone').fill('2615551234');
-  await page.locator('#confirm-order').click();
-  await expect(page.locator('#toast')).toContainText('Pedido registrado');
+test('Functional QA: public product modal and local order', async ({ page }) => {
+  await page.goto('/comercio/kiosco-la-esquina', { waitUntil: 'networkidle' });
+  await page.locator('.catalog-card').first().click();
+  await expect(page.locator('.lead-modal')).toBeVisible();
+  await page.getByRole('button', { name: /Agregar al pedido/i }).click();
+  await expect(page.locator('.section-note')).toContainText('1 en pedido');
+  const checkout = page.getByRole('link', { name: /Enviar pedido/i });
+  await expect(checkout).toHaveAttribute('href', /wa\.me\/5492615551040/);
 });
 
-test('Functional QA: admin login and product creation', async ({ page }) => {
+test('Functional QA: admin commerce navigation', async ({ page }) => {
   await page.goto('/admin/', { waitUntil: 'networkidle' });
-  await page.locator('#login-pass').fill('admin' + '123');
-  await page.locator('#login-btn').click();
-  await expect(page.locator('#admin-app')).toHaveClass(/show/);
-  await page.getByRole('button', { name: /Productos/i }).click();
-  await page.locator('#prod-name').fill('QA Product');
-  await page.locator('#prod-category').fill('QA');
-  await page.locator('#prod-price').fill('999');
-  await page.locator('#add-prod').click();
-  await expect(page.locator('#products-list')).toContainText('QA Product');
+  await expect(page.getByRole('heading', { name: 'Inicio' })).toBeVisible();
+  await page.getByRole('button', { name: 'Productos' }).click();
+  await expect(page.getByRole('heading', { name: 'Productos' })).toBeVisible();
+  const selector = page.locator('.category-switch');
+  await expect(selector).toBeVisible();
+  await selector.selectOption('mendoza-motor');
+  await expect(page.locator('.side-business')).toContainText('Mendoza Motor');
+  await expect(page.getByRole('link', { name: /Ver sitio público/i })).toHaveAttribute('href', '/comercio/mendoza-motor');
 });
 
 test('Accessibility QA: images and form controls have accessible names', async ({ page }) => {
