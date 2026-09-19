@@ -10,11 +10,9 @@ export function PublicHeader() {
     <nav className="public-menu" aria-label="Navegación principal">
       <Link href="/">Inicio</Link>
       <Link href="/categoria/kioscos">Categorías</Link>
-      <Link href="/#zonas">Zonas</Link>
       <Link href="/#comercios">Comercios</Link>
     </nav>
     <div className="public-nav-right">
-      <span className="demo-pill">PMV Marketplace</span>
       <Link className="admin-link" href="/admin"><Store size={15}/> Administrar</Link>
     </div>
   </header>;
