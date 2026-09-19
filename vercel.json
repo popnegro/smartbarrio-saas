@@ -1,62 +1,8 @@
 {
-  "redirects": [
-    {
-      "source": "/demo-kioscos/",
-      "destination": "/kioscos/",
-      "permanent": true
-    },
-    {
-      "source": "/demo-kioscos/nuovo-market",
-      "destination": "/kioscos/nuovo-market",
-      "permanent": true
-    },
-    {
-      "source": "/demo-kioscos/nuovo-market/",
-      "destination": "/kioscos/nuovo-market",
-      "permanent": true
-    },
-    {
-      "source": "/demo-kioscos/nuovo-market/admin.html",
-      "destination": "/admin/",
-      "permanent": true
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/index.html",
-      "destination": "/"
-    },
-    {
-      "source": "/kioscos/",
-      "destination": "/demo-kioscos/index.html"
-    },
-    {
-      "source": "/kioscos/index.html",
-      "destination": "/demo-kioscos/index.html"
-    },
-    {
-      "source": "/kioscos/nuovo-market",
-      "destination": "/demo-kioscos/nuovo-market/index.html"
-    },
-    {
-      "source": "/kioscos/nuovo-market/index.html",
-      "destination": "/demo-kioscos/nuovo-market/index.html"
-    },
-    {
-      "source": "/kioscos/nuovo-market/admin.html",
-      "destination": "/demo-kioscos/nuovo-market/admin.html"
-    },
-    {
-      "source": "/kioscos/nuovo-market/",
-      "destination": "/demo-kioscos/nuovo-market/index.html"
-    },
-    {
-      "source": "/admin/",
-      "destination": "/demo-kioscos/nuovo-market/admin.html"
-    },
-    {
-      "source": "/admin/index.html",
-      "destination": "/demo-kioscos/nuovo-market/admin.html"
-    }
+  "redirects":[
+    {"source":"/demo-kioscos/","destination":"/kioscos/","permanent":true},
+    {"source":"/demo-kioscos/nuovo-market","destination":"/kioscos/nuovo-market","permanent":true},
+    {"source":"/demo-kioscos/nuovo-market/","destination":"/kioscos/nuovo-market","permanent":true},
+    {"source":"/demo-kioscos/nuovo-market/admin.html","destination":"/admin/","permanent":true}
   ]
 }
