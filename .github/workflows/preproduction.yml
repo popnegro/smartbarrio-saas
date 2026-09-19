@@ -1,0 +1,135 @@
+name: Preproduction · Full Release QA
+
+on:
+  push:
+    branches: [preproduction]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+concurrency:
+  group: smartbarrio-preproduction
+  cancel-in-progress: true
+
+jobs:
+  browser:
+    name: Browser + Functional + Accessibility
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.23.2
+          cache: npm
+      - run: npm ci
+      - run: npm install --no-save --package-lock=false @playwright/test@1.55.0
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: npm run start -- --hostname 0.0.0.0 > /tmp/smartbarrio-next.log 2>&1 &
+      - name: Wait for application
+        run: |
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/index.html >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          cat /tmp/smartbarrio-next.log
+          exit 1
+      - run: npx playwright test tests/qa/browser-functional-accessibility.spec.js
+        env:
+          PLAYWRIGHT_BASE_URL: http://127.0.0.1:3000
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smartbarrio-preproduction-browser
+          path: |
+            playwright-report
+            test-results
+            /tmp/smartbarrio-next.log
+          if-no-files-found: ignore
+
+  visual:
+    name: Visual Regression
+    needs: browser
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.23.2
+          cache: npm
+      - run: npm ci
+      - run: npm install --no-save --package-lock=false @playwright/test@1.55.0
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: npm run start -- --hostname 0.0.0.0 > /tmp/smartbarrio-next.log 2>&1 &
+      - name: Wait for application
+        run: |
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/index.html >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          cat /tmp/smartbarrio-next.log
+          exit 1
+      - run: npx playwright test tests/qa/visual-regression.spec.js
+        env:
+          PLAYWRIGHT_BASE_URL: http://127.0.0.1:3000
+          VISUAL_BASELINE_URL: https://smartbarrio.vercel.app
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smartbarrio-preproduction-visual
+          path: |
+            test-results
+            playwright-report
+          if-no-files-found: ignore
+
+  codeql:
+    name: CodeQL
+    needs: browser
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+      - uses: github/codeql-action/autobuild@v3
+      - uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:javascript-typescript"
+
+  lighthouse:
+    name: Lighthouse
+    needs: browser
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.23.2
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run start -- --hostname 0.0.0.0 > /tmp/smartbarrio-next.log 2>&1 &
+      - name: Wait for application
+        run: |
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/index.html >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          cat /tmp/smartbarrio-next.log
+          exit 1
+      - uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            http://127.0.0.1:3000/index.html
+            http://127.0.0.1:3000/kioscos/
+            http://127.0.0.1:3000/kioscos/nuovo-market
+            http://127.0.0.1:3000/admin/
+          uploadArtifacts: true
+          temporaryPublicStorage: true
