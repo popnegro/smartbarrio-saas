@@ -1,10 +1,8 @@
-name: CodeQL
+name: Preproduction · CodeQL
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches: [preproduction, main]
   schedule:
     - cron: '30 3 * * 1'
   workflow_dispatch:
@@ -14,30 +12,24 @@ permissions:
   security-events: write
 
 concurrency:
-  group: smartbarrio-codeql-${{ github.ref }}
+  group: smartbarrio-codeql
   cancel-in-progress: true
 
 jobs:
   analyze:
-    name: Analyze
+    name: CodeQL · release candidate
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
         language: [javascript-typescript]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
-
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v3
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+      - uses: github/codeql-action/autobuild@v3
+      - uses: github/codeql-action/analyze@v3
         with:
           category: "/language:${{ matrix.language }}"
