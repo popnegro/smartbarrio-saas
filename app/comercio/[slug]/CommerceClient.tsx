@@ -1,0 +1,26 @@
+'use client';
+import {useState} from 'react';
+import Link from 'next/link';
+import {ArrowUpRight,ChevronRight,MapPin,Phone,MessageCircle,Navigation,X,Plus,Minus} from 'lucide-react';
+import type {Commerce,Product} from '@/lib/data';
+export function CommerceClient({commerce}:{commerce:Commerce}) {
+  const [cart,setCart]=useState<Record<string,number>>({});
+  const [selected,setSelected]=useState<Product|null>(null);
+  const count=Object.values(cart).reduce((a,b)=>a+b,0);
+  const add=(slug:string)=>setCart(c=>({...c,[slug]:(c[slug]||0)+1}));
+  const remove=(slug:string)=>setCart(c=>({...c,[slug]:Math.max(0,(c[slug]||0)-1)}));
+  const wa='https://wa.me/'+commerce.wa+'?text='+encodeURIComponent('Hola '+commerce.name+', quiero consultar/pedir: '+commerce.products.filter(p=>cart[p.slug]).map(p=>p.name+' x'+cart[p.slug]).join(', '));
+  return <div className="site-wrap">
+    <header className="public-nav"><div className="brand"><Link href="/">SmartBarrio</Link></div><Link className="admin-link" href="/admin">Administrar</Link></header>
+    <main className="public-main">
+      <div className="breadcrumb"><Link href="/">Inicio</Link><ChevronRight size={14}/><Link href={'/categoria/'+commerce.category}>{commerce.categoryLabel}</Link><ChevronRight size={14}/><span>{commerce.name}</span></div>
+      <section className="hero-card"><div className="hero-copy"><div className="eyebrow"><span className={'dot '+commerce.accent}></span>{commerce.categoryLabel} · {commerce.zoneLabel}</div><h1>{commerce.name}</h1><p>{commerce.description}</p><div className="hero-actions"><a className="btn primary" href={'https://wa.me/'+commerce.wa}><MessageCircle size={18}/> WhatsApp</a><a className="btn secondary" href={'tel:'+commerce.phone.replaceAll(' ','')}><Phone size={18}/> Llamar</a></div><div className="trust-row"><span><MapPin size={15}/> {commerce.address}</span><span>{commerce.hours}</span></div></div><div className={'hero-visual '+commerce.accent}><div className="visual-badge">{commerce.categoryLabel}</div><div className="visual-initials">{commerce.name.split(' ').map(x=>x[0]).slice(0,2).join('')}</div><div className="visual-caption"><MapPin size={15}/> {commerce.address}</div></div></section>
+      <section className="info-strip"><div><MapPin/><strong>Encontranos</strong><span>{commerce.address}</span></div><div><strong>Horarios</strong><span>{commerce.hours}</span></div><div><Phone/><strong>Contacto</strong><span>{commerce.phone}</span></div><a className="route" href={'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(commerce.mapQuery)} target="_blank" rel="noreferrer"><Navigation size={17}/> Cómo llegar <ArrowUpRight size={15}/></a></section>
+      {commerce.promos?.map(p=><section className="promo" key={p}><strong>{p}</strong></section>)}
+      <section className="section-head"><div><span className="kicker">CATÁLOGO</span><h2>Productos</h2></div><span className="section-note">{count} en pedido</span></section>
+      <div className="content-grid"><div className="catalog-grid">{commerce.products.map(p=><button className="catalog-card" key={p.slug} onClick={()=>setSelected(p)}><div className={'catalog-img '+commerce.accent}><span>{p.imageLabel}</span></div><div><h3>{p.name}</h3><p>{p.price||'Consultar'} · {p.description}</p></div><ArrowUpRight size={16}/></button>)}</div><div className="service-list"><div className="service-head">Servicios</div>{commerce.services.map(s=><div className="service-row" key={s}><span>{s}</span><ChevronRight size={16}/></div>)}</div></div>
+      <section className="contact-panel"><div><span className="kicker">PEDIDO LOCAL</span><h2>{count?'Tu pedido está listo':'Consultá por WhatsApp'}</h2><p>Disponibilidad, precios y servicios por WhatsApp.</p></div><a className="btn primary" href={count?wa:'https://wa.me/'+commerce.wa} target="_blank" rel="noreferrer"><MessageCircle size={18}/> {count?'Enviar pedido':'WhatsApp'}</a></section>
+    </main>
+    {selected&&<div className="modal-backdrop" onClick={()=>setSelected(null)}><div className="lead-modal" onClick={e=>e.stopPropagation()}><div className="modal-head"><div><span className="kicker">PRODUCTO</span><h2>{selected.name}</h2></div><button className="icon-btn" onClick={()=>setSelected(null)}><X/></button></div><p>{selected.description}</p><strong>{selected.price||'Consultar precio'}</strong><div className="qty-row"><button className="icon-btn" onClick={()=>remove(selected.slug)}><Minus/></button><strong>{cart[selected.slug]||0}</strong><button className="icon-btn" onClick={()=>add(selected.slug)}><Plus/></button></div><button className="btn primary full" onClick={()=>add(selected.slug)}>Agregar al pedido</button></div></div>}
+  </div>;
+}
