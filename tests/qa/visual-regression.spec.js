@@ -12,7 +12,7 @@ test.describe('Visual regression · production baseline', () => {
       fs.mkdirSync(SNAPSHOT_DIR, { recursive: true });
       const name = route.replace(/[^a-z0-9]+/gi, '_') || 'home';
       const baseline = path.join(SNAPSHOT_DIR, name + '-baseline.png');
-      const expected = path.join(process.cwd(), 'tests', 'qa', '__snapshots__', 'production', name + '.png');
+      const expected = test.info().snapshotPath('production', name + '.png');
       fs.mkdirSync(path.dirname(expected), { recursive: true });
 
       const production = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
