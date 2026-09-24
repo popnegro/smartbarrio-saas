@@ -2,7 +2,7 @@
 import {useState} from 'react';
 import Link from 'next/link';
 import {Search,MapPin,Phone,MessageCircle,Clock3,Menu,X,ChevronRight,ArrowUpRight,Store,Package,Tag,Inbox,BarChart3,Settings2,Plus} from 'lucide-react';
-import {commerces,categories as catalogCategories} from '@/lib/catalog';
+import {commerces,categories as catalogCategories} from '../lib/catalog';
 
 const cats=catalogCategories.map(x=>x.name);
 const shops=[
